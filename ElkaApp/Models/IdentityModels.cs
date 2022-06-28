@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Linq;
 
 namespace ElkaApp.Models
 {
@@ -29,5 +30,13 @@ namespace ElkaApp.Models
         {
             return new ApplicationDbContext();
         }
+
+        public virtual DbSet<Company> Companies { get; set; }
+        public virtual DbSet<Job> Jobs { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Status> Statuses { get; set; }
+        public virtual DbSet<JobStatus> JobStatuses { get; set; }
+
     }
+
 }
