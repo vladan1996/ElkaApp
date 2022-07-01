@@ -1,62 +1,174 @@
 ﻿@using ElkaApp.Models
 @model LoginViewModel
-@{
+@{  
     ViewBag.Title = "Log in";
+    Layout = null;
 }
-@*ide gas*@
-<h2>@ViewBag.Title.</h2>
-<div class="row">
-    <div class="col-md-8">
+<style>
+
+    .container_div{
+        height:100%;
+        width:100%;
+        display:flex;
+    }
+
+    .left_div{
+        background-color:#E0E0E0;
+        width:70%;
+        padding:30px;
+        display:flex;
+        align-items:center;
+        flex-direction:column;
+    }
+    .right_div {
+        text-align:center;
+        padding: 30px;
+        width: 30%;
+        padding:30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .left_div_image {
+        margin-top: 40px;
+    }
+
+    img {
+        width: 200px;
+        height: auto;
+    }
+
+    .left_div_title{
+        margin-top:40px;
+
+    }
+    .left_div_title>h1{
+        font-weight:700;
+        font-family:sans-serif;
+        margin-bottom:40px;
+    }
+
+    .left_div_title > p{
+        font-family:sans-serif;
+    }
+
+    .right_div_title {
+        text-align:center;
+    }
+
+
+    .redirect_to_register {
+        margin-top: 50px;
+    }
+
+    .input_circle {
+        width: 250px;
+        padding: 15px;
+        margin-top:20px;
+        border-radius: 20px;
+        border: 2px solid #b7bac7;
+        font-size: medium
+    }
+
+        .input_circle:focus {
+            outline: none;
+            border-color: #69adf0;
+        }
+
+    
+
+    .input_circle_button {
+        margin-top:10%;
+        background-color: #176AE7;
+        color: white;
+        width: 250px;
+        padding: 20px;
+        border-radius: 20px;
+        border: 1px solid;
+    }
+
+    .redirect_to_register{
+        text-align:center;
+        margin-top:20px;
+    }
+
+    .text-danger ul{
+        color:red;
+        list-style-type:none;
+        text-align:left
+    }
+
+    .text-danger {
+        
+        color: red;
+        margin-bottom: 20px;
+        text-align: left
+    }
+
+</style>
+<div class="container_div">
+
+    <div class="left_div">
+        
+        <div class="left_div_image">
+            <img src="~/Content/img/Logo.png"/>
+        </div>
+        <div class="left_div_title">
+            <h1>WELCOME TO ELKA</h1>
+            <p>Please login to our system. <br />If you donot have an account, please register.</p>
+
+        </div>   
+
+
+    </div>
+    <div class="right_div">
+        <div class="left_div_image">
+            <img src="~/Content/img/Logo.png" />
+            <h3 class="right_div_title">BE ONE OF US!</h3>
+        </div>
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <h4>Use a local account to log in.</h4>
-                <hr />
+
+
+
+                <div class="form_div">
+                    @Html.TextBoxFor(m => m.Email, new { placeholder = "EMAIL ADDRESS", @class = "input_circle" })
+                </div>
+                <div>
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+                <div>
+                    @Html.PasswordFor(m => m.Password, new { placeholder = "PASSWORD", @class = "input_circle" })
+                </div>
+                <div class="form_div">
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+
+                <div class="form_div_login">
+                    <div class="div_button">
+                        <input type="submit" value="LOGIN" class="input_circle_button" />
                     </div>
                 </div>
-                <div class="form-group">
-                    @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-                    <div class="col-md-10">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            @Html.CheckBoxFor(m => m.RememberMe)
-                            @Html.LabelFor(m => m.RememberMe)
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Log in" class="btn btn-default" />
-                    </div>
-                </div>
-                <p>
-                    @Html.ActionLink("Register as a new user", "Register")
-                </p>
-                @* Enable this once you have account confirmation enabled for password reset functionality
+
+                <div class="redirect_to_register">
                     <p>
-                        @Html.ActionLink("Forgot your password?", "ForgotPassword")
-                    </p>*@
+                        Don't have account?<span class="redirect_to_register_span"> @Html.ActionLink("Register", "Register")</span>
+                    </p>
+                </div>
             }
         </section>
+
     </div>
-    <div class="col-md-4">
-        <section id="socialLoginForm">
-            @Html.Partial("_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = ViewBag.ReturnUrl })
-        </section>
-    </div>
+
 </div>
+
+
+
+
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
