@@ -1,41 +1,163 @@
 ﻿@model ElkaApp.Models.RegisterViewModel
 @{
     ViewBag.Title = "Register";
+    Layout = null;
 }
+@*<h2>@ViewBag.Title.</h2>*@  
+<style>
+   .containerDiv{
+       min-height:100%;
+       width:100%;
+       display:flex;
+ 
+   }
+   .logo{
+       width:50%;
+       background-color:#E0E0E0;
+       text-align:center;
 
-<h2>@ViewBag.Title.</h2>
+   }
+   .register{
+       width:50%;
+       text-align:center;
+   }
+   
+   .logo img{
+       margin-top:50px;
+       margin-left:auto;
+       margin-right:auto;
+       width:200px;
+       height:200px;
+   }
+   .logo h1{
+       font-size:30px;
+       font-weight:bold;
+       margin-top:60px;
+       color:#000000;
+   }
+   .register img{
+       height:200px;
+       width:200px;
+       margin-top:50px;
+   }
+   .register h2{
+       color:#616161;
+   }
+   
 
-@using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Register" />
-        </div>
-    </div>
-}
+   .grids{
+       display:flex;
+       justify-content:center;
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+   }
+   .grid-container1{
+       display:grid;
+      grid-template-columns:auto;
+     
+     
+       
+
+   }
+
+   .grid-container2 {
+       display:grid;
+       grid-template-columns:auto;
+      
+       height:100px;
+   }
+   
+   .form-control{
+       width:250px;
+       padding:15px;
+       margin:15px;
+       border-radius:20px;
+       border:2px solid #b7bac7;
+       font-size:medium;
+       
+   }
+   
+ .form-control:focus{
+     outline:none;
+     border-color:#69adf0;
+ }
+    .btnRegister {
+        padding: 20px;
+        width: 250px;
+        border-radius: 20px;
+        background-color: #176AE7;
+        color: white;
+        border:none;
+        margin-top:50px;
+    }
+    .text-danger{
+    list-style-type:none;
+    text-align:left;
+    color:red;
+    }
+</style>                                                    
+
+        
+<div class="containerDiv">
+    <div class="logo">
+        <img src="~/Content/img/Logo.png" />
+        <h1>WELCOME TO ELKA <br /> REGISTER</h1>
+    </div>
+    <div class="register">
+
+        @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {@Html.AntiForgeryToken()
+        <img src="~/Content/img/Logo.png" />
+        <h3>BE ONE OF US!</h3>
+        <div class="grids">
+            <div class="grid-container1">
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Name, new { placeholder = "NAME", @class = "form-control" })
+                        @Html.ValidationMessageFor(m=>m.Name,"", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Email, new { placeholder = "EMAIL", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { placeholder = "PASSWORD CONFIRM", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="grid-container2">
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.Surname, new { placeholder = "SURNAME", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Surname, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.Password, new { placeholder = "PASSWORD", @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" class="btnRegister" value="REGISTER" />
+            </div>
+        </div>
+
+    }
+    </div>
+</div>
+        
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
