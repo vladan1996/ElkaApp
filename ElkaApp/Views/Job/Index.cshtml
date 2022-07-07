@@ -1,7 +1,123 @@
-﻿
+﻿@using ElkaApp.Models
+
+
+
 @{
     ViewBag.Title = "Index";
 }
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 25px;
+    }
 
-<h2>Index</h2>
+    .container-job {
+        display: flex;
+        border: 1px solid black;
+        width: 100%;
+        padding: 10px 20px 5px 20px;
+        align-content: center;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 30px;
+        height: 150px;
+    }
+
+    .container-title {
+        width: 20%;
+    }
+
+    .container-description {
+        display: flex;
+        align-items: center;
+        width: 60%;
+    }
+
+    .container-job-date {
+        display: flex;
+        align-items: center;
+        width: 20%;
+        align-content: center;
+        justify-content: center;
+    }
+
+    .container-btn {
+        margin-top: 40px;
+        width: 100%;
+    }
+
+    .btn-class {
+        width: 20%;
+        border-radius: 20px;
+    }
+
+    .container-description > p {
+        font-size: 11px;
+    }
+
+    @@media all and (max-width : 980px) {
+        .container-title > h4, .container-title > p {
+            font-size: 10px;
+        }
+
+        .container-description > p {
+            font-size: 8px;
+        }
+
+        .container-job-date > p {
+            font-size: 10px;
+        }
+    }
+</style>
+
+@if (ViewBag.Message != null)
+{
+
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+}
+
+
+
+<div class="container">
+    <h2 style="font-family:Roboto,sans-serif">JOBS</h2>
+    <div class="container-btn">
+        <a href="@Url.Action("Create", "Job")"><button class="btn btn-primary btn-class float-end">ADD JOB</button></a>
+    </div>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="container-job">
+
+                <div class="container-title">
+                    <h4>@item.Name</h4>
+                    <p>@item.Location</p>
+                </div>
+
+                <div class="container-description">
+                    <p>@item.Description</p>
+                </div>
+
+                <div class="container-job-date">
+                    <p> @item.StartDate </p>
+                </div>
+            </div>
+        }
+
+    }
+    else
+    {
+
+
+    }
+
+
+
+
+
+
 

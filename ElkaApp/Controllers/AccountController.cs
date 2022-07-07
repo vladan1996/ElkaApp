@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ElkaApp.Models;
+using System.Web.Security;
 
 namespace ElkaApp.Controllers
 {
@@ -392,8 +393,10 @@ namespace ElkaApp.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
+
+        
 
         //
         // GET: /Account/ExternalLoginFailure

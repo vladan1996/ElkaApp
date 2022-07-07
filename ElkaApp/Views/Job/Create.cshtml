@@ -1,0 +1,208 @@
+﻿@model ElkaApp.Models.Job
+
+@{
+    ViewBag.Title = "Create";
+}
+
+
+<style>
+    .container {
+        max-width: 600px;
+        width: 100%;
+        background: #fff;
+        margin: 20px auto;
+        box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
+        padding: 30px;
+        margin-top: 80px;
+    }
+
+    .container-title {
+        text-align: center;
+        margin-bottom: 50px;
+    }
+
+        .container-title > h3 {
+            font-weight: 700;
+            font-family: sans-serif;
+            text-transform: uppercase;
+        }
+
+    .form {
+        width: 100%;
+    }
+
+    .form-input {
+        display: flex;
+        margin-bottom: 15px;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-content: center;
+    }
+
+        .form-input > label {
+            width: 150px;
+            color: #757575;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+    .form-control {
+        width: 100%;
+        outline: none;
+        font-size: 15px;
+        padding: 8px 10px;
+        border-radius: 30px;
+        transition: all 0.3s ease;
+    }
+
+    .text-area {
+        width: 100%;
+        height: 140px;
+        resize: none;
+    }
+
+
+    
+
+    .btn-primary {
+        width: 50%;
+        border-radius:30px; 
+        margin-right:30px;
+    }
+    
+    .form-group-btn{
+        display:flex;
+        justify-content:center;
+        margin-top:50px;
+        
+
+    }
+</style>
+
+
+@using (Html.BeginForm())
+{
+
+
+    @Html.AntiForgeryToken()
+
+    <div class="container">
+        <div class="container-title">
+            <h3>ADD JOB</h3>
+        </div>
+        <div class="form">
+            <div class="form-input">
+                <label>Job Name</label>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-input">
+                <label>Job Location</label>
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-input">
+                <label>Start of Work</label>
+                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+            <div class="form-input">
+                <label>Description</label>
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control text-area" } })
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12 form-group-btn">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </div>
+
+        </div>
+        <div class="container">
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+}
+
+
+
+
+
+@*@using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="container">
+            <h3>ADD JOB</h3>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-8">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Location, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Location, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>*@
+
+
+
+
+
+
+@*
+
+        <div class="container">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="container-title">
+            <h3>ADD JOB</h3>
+        </div>
+
+        <div class="container-form">
+            <div class="container-form-group">
+                <label style="font-family:sans-serif;font-weight:600">JOB NAME*</label>
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+*@

@@ -128,6 +128,7 @@
             <h3 class="right_div_title">BE ONE OF US!</h3>
         </div>
         <section id="loginForm">
+        
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
@@ -160,6 +161,7 @@
                     </p>
                 </div>
             }
+        
         </section>
 
     </div>

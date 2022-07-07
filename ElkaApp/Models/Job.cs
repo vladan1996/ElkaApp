@@ -12,7 +12,7 @@ namespace ElkaApp.Models
         public Guid ID { get; set; }
         [Required]
         public string Name { get; set; }   
-        public string Locoation { get; set; }   
+        public string Location { get; set; }   
         public string Description { get; set; }   
         [Required]
         public DateTime StartDate { get; set; }   
