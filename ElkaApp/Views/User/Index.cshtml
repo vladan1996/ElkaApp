@@ -1,0 +1,193 @@
+﻿@*@model ElkaApp.Models.RegisterViewModel*@
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    .user {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    h1 {
+        margin-top: 40px;
+        margin-bottom: 40px;
+    }
+
+    .pic {
+        width: 140px;
+        height: 140px;
+        border: 2px solid #b7bac7;
+        padding: 20px;
+        border-radius: 20px;
+        margin-bottom: 35px;
+    }
+
+        .pic img {
+            width: 100px;
+            height: 100px;
+        }
+
+    .grid-container {
+        display: grid;
+        grid-template-columns: auto auto;
+        gap: 20px;
+    }
+
+    .grid-item {
+        display: flex;
+        justify-content: end;
+        align-items: center;
+    }
+
+    input {
+        padding: 15px;
+        width: 250px;
+        border-radius: 25px;
+        border: 2px solid #b7bac7;
+        font-size: medium;
+    }
+
+        input:focus {
+            outline: none;
+            border-color: #69adf0;
+        }
+
+    label {
+        font-weight: bold;
+        margin-right: 10px;
+    }
+
+    .btnUser {
+        margin-top: 80px;
+        padding: 15px;
+        width: 250px;
+        border-radius: 25px;
+        background-color: #176AE7;
+        color: white;
+        border: none;
+    }
+    .birthdate{
+       text-transform:uppercase;
+    }
+</style>
+<div class="user">
+    <p class="temp"></p>
+
+
+    <h1>PROFILE INFORMATION</h1>
+    <div class="pic">
+        <img src="~/Content/img/Profile.png" />
+    </div>
+
+    <form class="grid-container" method="post" action="">
+        <div class="grid-item">
+            <label for="name">NAME*</label>
+            <input type="text" class="name" required />
+        </div>
+        <div class="grid-item">
+            <label for="lastName">LAST NAME*</label>
+            <input type="text" class="lastName" required />
+        </div>
+        <div class="grid-item">
+            <label for="birthdate">BIRTHDATE*</label>
+            <input type="date" class="birthdate" required/>
+        </div>
+        <div class="grid-item">
+            <label for="street">STREET*</label>
+            <input type="text" class="street" required/>
+        </div>
+        <div class="grid-item">
+            <label for="city">CITY*</label>
+            <input type="text" class="city" required/>
+        </div>
+        <div class="grid-item">
+            <label for="phone">PHONE*</label>
+            <input type="text" class="phone" required/>
+        </div>
+        <div class="grid-item">
+            <label for="email">EMAIL*</label>
+            <input type="email" class="email" required/>
+        </div>
+        <div class="grid-item">
+            <label for="profession">PROFESSION*</label>
+            <input type="text" class="profession" required/>
+        </div>
+        <p id="par"></p>
+    </form>
+    <button class="btnUser" value="SAVE">SAVE</button>
+</div>
+
+@*@Scripts.Render("~/bundles/jquery")
+    @RenderSection("scripts", required: false)*@
+
+
+
+
+<script>
+    let data = localStorage.getItem('userID');
+
+    const btn = document.querySelector('.btnUser');
+
+    const name = document.querySelector('.name');
+    const lastName = document.querySelector('.lastName');
+    const brithdate = document.querySelector('.birthdate');
+    const street = document.querySelector('.street');
+    const city = document.querySelector('.city');
+    const phone = document.querySelector('.phone');
+    const email = document.querySelector('.email');
+    const profession = document.querySelector('.profession')
+
+   
+    btn.addEventListener('click', () => {
+
+        let fullname = name.value + " " + lastName.value;
+        const dataSend = {
+            fullname: fullname,
+            brithdate: brithdate.value,
+            street: street.value,
+            city: city.value,
+            phone: phone.value,
+            email: email.value,
+            profession: profession.value,
+            Id: data
+
+        }
+        if (name.value.length == 0 || lastName.value.length == 0 || brithdate.value.length == 0 || street.value.length == 0 || city.value.length == 0 || phone.value.length == 0 || email.value.length == 0 || profession.value.length == 0) {
+            document.getElementById('par').innerHTML = "All input fields are required!";
+        }
+        else {
+          
+            document.getElementById('par').innerHTML ="";
+        }
+        name.value = "";
+        lastName.value = "";
+        brithdate.value = "";
+        street.value = "";
+        city.value = "";
+        phone.value = "";
+        email.value = "";
+        profession.value = "";
+
+        $.ajax({
+            type: "post",
+            url: "/User/UpdateData",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataSend),
+            dataType: "json",
+            success: (s) => {
+                console.log("succ");
+                console.log(s);
+
+            },
+            error: (data) => {
+                console.log("errr")
+            }
+
+        });
+    });
+
+
+
+</script>
+
