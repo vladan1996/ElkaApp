@@ -1,0 +1,124 @@
+﻿@using ElkaApp.Models
+@model Company
+    @{
+        ViewBag.Title = "Company";
+    }
+
+
+
+    <style>
+
+        .div_button {
+            text-align: center;
+        }
+
+        .input_circle_button {
+            margin-top: 10%;
+            background-color: #176AE7;
+            color: white;
+            width: 200px;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid;
+        }
+
+        .container_div {
+            padding:50px;
+        }
+
+        .label_input{
+
+            width:150px;
+            text-align:center;
+            font-weight:bold;
+        }
+
+        .input_circle {
+            margin-top: 5%;
+            width: 350px;
+            padding: 15px;
+            border-radius: 25px;
+            border: 2px solid #b7bac7;
+            font-size: medium;
+        }
+
+            .input_circle:focus {
+                outline: none;
+                border-color: #69adf0;
+            }
+
+        img {
+            width: 150px;
+            height: auto;
+        }
+
+        #form {
+            margin-right:10%;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+
+        .title-img {
+            text-align:center
+        }
+
+        .form_div {
+            padding-right:10%;
+/*            width:100%;*/
+        }
+
+    </style>
+
+    <div class="container_div">
+
+
+        <div class="title-img">
+
+            <h2>COMPANY INFO</h2>
+            <img src="~/Content/img/Logo.png" />
+
+        </div>
+     
+
+        <section id="form">
+
+            @using (Html.BeginForm("Company", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+            {
+
+                <div class="form_div">
+                    @Html.LabelFor(m => m.Name, "COMPANY NAME*", new { @class = "label_input" })
+                    @Html.TextBoxFor(m => m.Name, new { @class = "input_circle" })
+                </div>
+                <div class="form_div">
+                    @Html.LabelFor(m => m.Street, "STREET*", new { @class = "label_input" })
+                    @Html.TextBoxFor(m => m.Street, new { @class = "input_circle" })
+                </div>
+                <div class="form_div">
+                    @Html.LabelFor(m => m.City, "CITY*", new { @class = "label_input" })
+                    @Html.TextBoxFor(m => m.City, new { @class = "input_circle" })
+                </div>
+                <div class="form_div">
+                    @Html.LabelFor(m => m.Phone, "PHONE*", new { @class = "label_input" })
+                    @Html.TextBoxFor(m => m.Phone, new { @class = "input_circle" })
+                </div>
+                <div class="form_div">
+                    @Html.LabelFor(m => m.Email, "EMAIL*", new { @class = "label_input" })
+                    @Html.TextBoxFor(m => m.Email, new { @class = "input_circle" })
+                </div>
+
+                <div class="div_button">
+                    <input type="submit" value="SAVE" class="input_circle_button" />
+                </div>
+
+
+            }
+            </section>
+    </div>
+
+
+
+
