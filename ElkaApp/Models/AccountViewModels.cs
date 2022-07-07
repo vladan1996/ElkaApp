@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace ElkaApp.Models
@@ -63,7 +64,8 @@ namespace ElkaApp.Models
     }
 
     public class RegisterViewModel
-    { 
+    {
+
         [Required]
         public string Name { get; set; }
         
