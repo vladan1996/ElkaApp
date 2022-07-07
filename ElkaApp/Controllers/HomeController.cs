@@ -11,6 +11,7 @@ namespace ElkaApp.Controllers
        [Authorize]
         public ActionResult Index()
         {
+
             return View();
         }
 

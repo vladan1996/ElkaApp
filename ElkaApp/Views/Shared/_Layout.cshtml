@@ -254,7 +254,7 @@
                         </a>
                     </li>
                     <li class="navigation-list-item">
-                        <a href="#">
+                        <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
                             <i class="fa-solid fa-user"></i>
                             User
                         </a>
@@ -290,12 +290,40 @@
 
             </div>
 
+                </ul>
+            </div>
+        </div>
+        <div class="navigation-bar-btn">
+            <button id="sidebarToggle" class="btn sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="navigation-bar">
+
+        </div>
+
+        <div class="content">
 
         
             <div class="content">
 
                 @RenderBody()
 
+
+
+
+
+
+        </div>
+
+        <footer>
+            <p class="footer-text">&copy; @DateTime.Now.Year - ELKA Co. All Rights Reserved </p>
+        </footer>
+
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </div>
             </div>
         
         
@@ -349,11 +377,12 @@
  
 
 
-    @Scripts.Render("~/bundles/jquery")
+    @*@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
 
 
+    @RenderSection("scripts", required: false)*@
 </body>
 </html>
