@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using ElkaApp.Models;
+using System.IO;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ElkaApp.Controllers;
@@ -45,21 +46,27 @@ namespace ElkaApp
             if (DB != null)
                 DB.Dispose();
         }
+ 
 
-        public Guid RegisterNewUser(string ID, RegisterViewModel model)
+        public void AddCompany(Company company)
         {
             
-            var user = new Models.User
+            //var user = new Models.User;
+
+
+            Company obj = new Company()
             {
                 ID = Guid.NewGuid(),
-                UserID = Guid.Parse(ID),
-                Fullname = model.Name + " " + model.Surname,
-                Email = model.Email
+                Name = company.Name,
+                Street = company.Street,
+                City = company.City,
+                Phone = company.Phone,
+                Email = company.Email,
+                FilePath = company.FilePath
             };
-            DB.Users.Add(user);
-            DB.SaveChanges();
-            return user.ID;
 
+            DB.Companies.Add(obj);
+            DB.SaveChanges();
         }
 
 
@@ -98,9 +105,21 @@ namespace ElkaApp
             return obj;
         }
 
+        public Guid RegisterNewUser(string ID, RegisterViewModel model)
+        {
+            var user = new Models.User
+            {
+                ID = Guid.NewGuid(),
+                UserID = Guid.Parse(ID),
+                Fullname = model.Name + " " + model.Surname,
+                Email = model.Email
+            };
+            DB.Users.Add(user);
+            DB.SaveChanges();
+            return user.ID;
+        }
+
     }
 
-
-
-
 }
+
