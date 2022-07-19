@@ -10,6 +10,7 @@ namespace ElkaApp.Controllers
     public class BaseController : Controller
     {
         protected PanelLogic BLL;
+
         public BaseController()
         {
             BLL = new PanelLogic();

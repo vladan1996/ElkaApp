@@ -1,119 +1,241 @@
 ﻿@using ElkaApp.Models
 @model Company
-    @{
-        ViewBag.Title = "Company";
+@{
+    ViewBag.Title = "Company";
+}
+
+
+
+
+<style>
+
+    .help-block animation-slideDown {
+        color: red;
+        margin-bottom: 20px;
+        text-align: left
     }
 
+    .div_button {
+        text-align: center;
+    }
 
+    .input_circle_button {
+        margin-top: 10%;
+        background-color: #176AE7;
+        color: white;
+        width: 200px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid;
+    }
 
-    <style>
+    .container_div {
+        padding: 50px;
+    }
 
-        .div_button {
-            text-align: center;
+    .label_input {
+        width: 150px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    .input_circle {
+        margin-top: 5%;
+        width: 350px;
+        padding: 15px;
+        border-radius: 25px;
+        border: 2px solid #b7bac7;
+        font-size: medium;
+    }
+
+        .input_circle:focus {
+            outline: none;
+            border-color: #69adf0;
         }
 
-        .input_circle_button {
-            margin-top: 10%;
-            background-color: #176AE7;
-            color: white;
-            width: 200px;
-            padding: 10px;
-            border-radius: 20px;
-            border: 1px solid;
-        }
+    img {
+        width: 150px;
+        height: auto;
+    }
 
-        .container_div {
-            padding:50px;
-        }
+    #form {
+        margin-right: 10%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
 
-        .label_input{
+    .title-img {
+        text-align: center
+    }
 
-            width:150px;
-            text-align:center;
-            font-weight:bold;
-        }
+    .form_div {
+        padding-right: 10%;
+    }
 
-        .input_circle {
-            margin-top: 5%;
-            width: 350px;
-            padding: 15px;
-            border-radius: 25px;
-            border: 2px solid #b7bac7;
-            font-size: medium;
-        }
+    .text-danger {
+        text-align: center;
+        margin-left: 30%;
+        color: red;
+        display: none
+    }
 
-            .input_circle:focus {
-                outline: none;
-                border-color: #69adf0;
-            }
+    .imagePreview {
+        width: 100%;
+        height: 180px;
+        background-position: center center;
+        background: url(http://cliquecities.com/assets/no-image-e3699ae23f866f6cbdf8ba2443ee5c4e.jpg);
+        background-color: #fff;
+        background-size: cover;
+        background-repeat: no-repeat;
+        display: inline-block;
+        box-shadow: 0px -3px 6px 2px rgba(0,0,0,0.2);
+    }
 
-        img {
-            width: 150px;
-            height: auto;
-        }
+    .btn-primary {
+        display: block;
+        border-radius: 0px;
+        box-shadow: 0px 4px 6px 2px rgba(0,0,0,0.2);
+        margin-top: -5px;
+    }
 
-        #form {
-            margin-right:10%;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            flex-direction: column;
-            height: 100%;
-            width: 100%;
-        }
+    .imgUp {
+        margin-bottom: 15px;
+    }
 
-        .title-img {
-            text-align:center
-        }
+    .del {
+        position: absolute;
+        top: 0px;
+        right: 15px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        line-height: 30px;
+        background-color: rgba(255,255,255,0.6);
+        cursor: pointer;
+    }
 
-        .form_div {
-            padding-right:10%;
-/*            width:100%;*/
-        }
+    .imgAdd {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background-color: #4bd7ef;
+        color: #fff;
+        box-shadow: 0px 0px 2px 1px rgba(0,0,0,0.2);
+        text-align: center;
+        line-height: 30px;
+        margin-top: 0px;
+        cursor: pointer;
+        font-size: 15px;
+    }
 
-    </style>
+    .title-img{
+        margin-bottom: 30px;
+    }
+    #FilePath-error{
+        margin-left:0px;
+    }
+</style>
 
-    <div class="container_div">
+<div class="container_div">
 
 
-        <div class="title-img">
+    <div class="title-img">
 
-            <h2>COMPANY INFO</h2>
-            <img src="~/Content/img/Logo.png" />
+        <h2>COMPANY INFO</h2>
 
-        </div>
-
-        @using (Html.BeginForm("Company", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-        {
-            <section id="form">
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Name, "COMPANY NAME*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Name, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Street, "STREET*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Street, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.City, "CITY*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.City, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Phone, "PHONE*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Phone, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Email, "EMAIL*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Email, new { @class = "input_circle" })
-                </div>
-
-                <div class="div_button">
-                    <input type="submit" value="SAVE" class="input_circle_button" />
-                </div>
-            </section>
-        }
     </div>
 
 
+    @using (Html.BeginForm("SaveCompany", "Company", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "company-registration", enctype = "multipart/form-data" }))
+    {
 
+        @Html.AntiForgeryToken()
+        HtmlHelper.UnobtrusiveJavaScriptEnabled = false;
+
+        <section id="form">
+
+            <div class="form_div" style="text-align:center; margin-left:10%">
+
+                <div class="imagePreview"></div>
+                @Html.LabelFor(model => model.FilePath, htmlAttributes: new { @type = "file", @class = "btn btn-primary input_circle_button" })
+                @Html.TextBoxFor(model => model.FilePath, new { type = "file", @class = "uploadFile img", @style = "width: 0px;height: 0px " })
+            </div>
+            <div class="form_div">
+                @Html.LabelFor(m => m.Name, "COMPANY NAME*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "input_circle name" })
+            </div>
+
+            <div class="form_div">
+                @Html.LabelFor(m => m.Street, "STREET*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Street, new { @class = "input_circle street" })
+            </div>
+
+            <div class="form_div">
+                @Html.LabelFor(m => m.City, "CITY*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.City, new { @class = "input_circle city" })
+            </div>
+
+            <div class="form_div">
+                @Html.LabelFor(m => m.Phone, "PHONE*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Phone, new { @class = "input_circle phone" })
+            </div>
+            <div class="form_div">
+                @Html.LabelFor(m => m.Email, "EMAIL*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "input_circle email" })
+
+            </div>
+
+            <div class="div_button">
+                <input type="submit" value="SAVE" class="input_circle_button" id="form-button" />
+            </div>
+
+
+        </section>
+
+    }
+</div>
+
+
+
+@section Scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/custom-validator")
+}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="~/Scripts/CompanyValidation.js"></script>
+
+<script src="/scripts/jquery.min.js"></script>
+<script src="/bootstrap/js/bootstrap.min.js"></script>
+
+
+
+
+
+<script>
+    $(function () {
+        $(document).on("change", ".uploadFile", function () {
+            var uploadFile = $(this);
+            var files = !!this.files ? this.files : [];
+            if (!files.length || !window.FileReader) return; // no file selected, or no FileReader support
+
+            if (/^image/.test(files[0].type)) { // only image file
+                var reader = new FileReader(); // instance of the FileReader
+                reader.readAsDataURL(files[0]); // read the local file
+
+                reader.onloadend = function () { // set image data as background of div
+                    //alert(uploadFile.closest(".upimage").find('.imagePreview').length);
+                    uploadFile.closest(".form_div").find(".imagePreview").css("background-image", "url(" + this.result + ")");
+                    
+                }
+            }
+
+        });
+    });
+</script>
 

@@ -19,8 +19,10 @@ namespace ElkaApp.Models
         [Required]
         public string Phone { get; set; }
         [Required]
+        [EmailAddress]
         public string Email { get; set; }
-        
+        [Required]
+        [Display(Name = "UPLOAD IMAGE")]
         public string FilePath { get; set; }
 
     }

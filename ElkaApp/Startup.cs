@@ -14,6 +14,8 @@ namespace ElkaApp
         {
 
             ConfigureAuth(app);
+         //   app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+
         }
     }
 

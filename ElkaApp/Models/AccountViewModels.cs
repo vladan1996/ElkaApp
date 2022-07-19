@@ -49,6 +49,8 @@ namespace ElkaApp.Models
 
     public class LoginViewModel
     {
+        public string Id { get; set; }
+
         [Required]
         [Display(Name = "Email")]
         [EmailAddress]
