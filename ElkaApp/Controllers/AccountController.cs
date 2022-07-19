@@ -10,14 +10,18 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ElkaApp.Models;
 using System.Web.Security;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ElkaApp.Controllers
 {
+   
     [Authorize]
     public class AccountController : BaseController
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+      
+
 
         public AccountController()
         {
@@ -28,6 +32,8 @@ namespace ElkaApp.Controllers
             UserManager = userManager;
             SignInManager = signInManager;
         }
+
+        
 
         public ApplicationSignInManager SignInManager
         {
@@ -152,12 +158,32 @@ namespace ElkaApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userName = model.Name + " " + model.Surname;
-                var user = new ApplicationUser { UserName = userName, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var newUser = BLL.RegisterNewUser(user.Id, model);
                 if (result.Succeeded)
                 {
+                    var userStore = new UserStore<IdentityUser>(new ApplicationDbContext());
+                    var userManager = new UserManager<IdentityUser>(userStore);
+
+                    var roleStore = new RoleStore<IdentityRole>(new ApplicationDbContext());
+                    var roleManager = new RoleManager<IdentityRole>(roleStore);
+                    await roleManager.CreateAsync(new IdentityRole("User"));
+                    await UserManager.AddToRoleAsync(user.Id, "User");
+
+                    if (!roleManager.RoleExists("Admin"))
+                    {
+                        var roleresult = roleManager.Create(new IdentityRole("Admin"));
+  
+                            user = new ApplicationUser { UserName = "Admin@admin.com", Email = "admin@admin.com" };
+                            result = await UserManager.CreateAsync(user, "Admin.123");
+                            newUser = BLL.RegisterNewUser(user.Id, model);
+                            await UserManager.AddToRoleAsync(user.Id, "Admin");
+                    }
+
+                    
+
+          
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771

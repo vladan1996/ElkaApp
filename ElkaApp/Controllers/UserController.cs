@@ -13,12 +13,13 @@ namespace ElkaApp.Controllers
 
         PanelLogic p = new PanelLogic();
         // GET: User
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-
+        [Authorize]
         [HttpPost]
         public void UpdateData( User user) {
          

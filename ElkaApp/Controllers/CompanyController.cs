@@ -10,14 +10,15 @@ namespace ElkaApp.Controllers
     public class CompanyController : Controller
     {
         // GET: Company
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-       public ActionResult SaveCompany(Company model)
-        {
+       //public ActionResult SaveCompany(Company model)
+       // {
 
-        }
+       // }
     }
 }

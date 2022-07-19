@@ -82,13 +82,10 @@
             <img src="~/Content/img/Logo.png" />
 
         </div>
-     
 
-        <section id="form">
-
-            @using (Html.BeginForm("Company", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-            {
-
+        @using (Html.BeginForm("Company", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            <section id="form">
                 <div class="form_div">
                     @Html.LabelFor(m => m.Name, "COMPANY NAME*", new { @class = "label_input" })
                     @Html.TextBoxFor(m => m.Name, new { @class = "input_circle" })
@@ -113,10 +110,8 @@
                 <div class="div_button">
                     <input type="submit" value="SAVE" class="input_circle_button" />
                 </div>
-
-
-            }
             </section>
+        }
     </div>
 
 

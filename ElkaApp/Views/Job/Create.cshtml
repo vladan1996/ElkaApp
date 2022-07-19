@@ -1,17 +1,18 @@
 ﻿@model ElkaApp.Models.Job
 
 @{
+    /**/
+
     ViewBag.Title = "Create";
 }
 
-
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <style>
     .container {
         max-width: 600px;
         width: 100%;
         background: #fff;
-        margin: 20px auto;
-        box-shadow: 3px 3px 3px 3px rgba(0,0,0,0.2);
+        margin: 0 auto;
         padding: 30px;
         margin-top: 80px;
     }
@@ -62,21 +63,30 @@
         resize: none;
     }
 
-
-    
-
     .btn-primary {
         width: 50%;
-        border-radius:30px; 
-        margin-right:30px;
+        border-radius: 30px;
+        margin-right: 30px;
     }
-    
-    .form-group-btn{
-        display:flex;
-        justify-content:center;
-        margin-top:50px;
-        
 
+    .form-group-btn {
+        display: flex;
+        justify-content: center;
+        margin-top: 50px;
+    }
+
+    .text-danger {
+        color: black;
+    }
+
+    .message {
+        width: 100%;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        justify-content: center;
+        margin-left: 140px;
+        padding: 10px 0 0 0;
     }
 </style>
 
@@ -91,37 +101,255 @@
         <div class="container-title">
             <h3>ADD JOB</h3>
         </div>
-        <div class="form">
+        <form class="form">
             <div class="form-input">
                 <label>Job Name</label>
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @id = "name", @class = "form-control" } })
             </div>
             <div class="form-input">
                 <label>Job Location</label>
-                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Location, new { htmlAttributes = new { @id = "location", @class = "form-control" } })
             </div>
             <div class="form-input">
-                <label>Start of Work</label>
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                <label for="StartDate">Start of Work</label>     
+                <input type="date" id="startDate" class="form-control" required />
+                @*@Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @id = "startDate", @class = "form-control" } })*@
             </div>
             <div class="form-input">
                 <label>Description</label>
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control text-area" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @id = "description", @class = "form-control text-area" } })
             </div>
 
             <div class="form-group">
                 <div class="col-md-12 form-group-btn">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="Save" class="btn btn-primary" id="btnSubmit" />
                 </div>
             </div>
 
-        </div>
-        <div class="container">
-            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-        </div>
+        </form>
     </div>
 
 }
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            $("#btnSubmit").click(function (e) {
+                e.preventDefault();
+                validateInputs();
+            })
+        })
+
+        function validateInputs() {
+            var name = $("#name").val();
+            var startDate = $("#startDate").val();
+
+
+            if (name.length == 0 || startDate.length == 0) {
+                if (name.length == 0) {
+                    toastr.error("Fields Job Name is required! ")
+                    document.querySelector('#name').style.border = "2px solid red";
+                } else {
+                    document.querySelector('#name').style.border = "2px solid green";
+                }
+
+                if (startDate.length == 0) {
+                    toastr.error("Fields Start of work is required! ")
+                    document.querySelector('#startDate').style.border = "2px solid red";
+                } else {
+                    document.querySelector('#name').style.border = "2px solid green";
+                }
+            } else {
+                document.querySelector('#name').style.border = "1px solid #ced4da";
+                document.querySelector('#startDate').style.border = "1px solid #ced4da";
+                SaveData();
+            }
+
+           
+
+            
+
+            //
+            //    toastr.error("Fields Job Name and Job start Date is required! ")
+            //    document.querySelector('#name').style.border = "2px solid red";
+            //    document.querySelector('#startDate').style.border = "2px solid red";
+            //} else {
+               
+            //} 
+        }
+
+        function SaveData() {
+            var name = $("#name").val();
+            var location = $("#location").val();
+            var startDate = $("#startDate").val();
+            var description = $("#description").val();
+
+            var obj = {
+                Name: name,
+                Location: location,
+                StartDate: startDate,
+                Description: description
+            }
+
+           
+
+            $.ajax({
+                type: 'POST',
+                url: '/Job/Create',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(obj),
+                dataType: 'json',
+                success: (data) => {      
+                    
+                    if (data.success === true) {
+                      
+                        toastr.success(data.message, 'Success Alert', { timeOut: 3000 });
+
+                    
+                        document.querySelector('#name').value = "";
+                        document.querySelector('#location').value = "";
+                        document.querySelector('#startDate').value = "";
+                        document.querySelector('#description').value = ""; 
+                    } else {
+                        toastr.error(data.message, 'Information Alert', { timeOut: 3000 })
+                    }
+                 
+
+                },
+                error: (data) => {
+                    toastr.error(data.message, 'Error', { timeOut: 3000 })
+                }
+            });
+        }
+
+    </script>
+}
+
+
+
+
+
+
+
+
+
+
+
+@*//$(function () {
+
+    //    $("#btnSubmit").click(function () {
+    //        var product = { Name: "Web Design" }
+    //        $.ajax({
+
+    //            type: 'POST',
+    //            dataType: 'JSON',
+    //            contentType: 'application/json; charset=utg-8',
+    //            data: " { product:" + JSON.stringify(objJob) + " }",
+    //            url: '/Job/Index',
+    //            success: function (data) {
+    //                alert("product name" + data);
+    //            },
+    //            error: function (result) {
+    //                alert('Nesto nije dobro');
+    //            }
+    //        })
+    //    })
+
+    //})*@
+
+
+
+
+
+
+
+
+@*$(document).ready(function () {
+
+        $("#btnSubmit").click(function (e) {
+            e.preventDefault();
+            SaveData();
+        });
+
+
+        function SaveData() {
+
+            checkDate();
+            checkName();
+
+
+
+
+        }
+
+     function checkName() {
+
+        var messageName = '@Html.ValidationMessageFor(model => model.Name, "Name field is required. Please input correct name for this field!", new { @class = "" })';
+        var name = $("#name").val();
+
+         if (name == "") {
+             toastr.error(messageName);
+             document.querySelector('#name').style.border = "2px solid red";
+         } else {
+             document.querySelector('#name').style.border = "2px solid green";
+         }
+
+        }
+
+     function checkDate() {
+
+        var messageDate = '@Html.ValidationMessageFor(model => model.StartDate, "StartDate field is required. Please input correct date for this field!", new { @class = "" })';
+         var date = $("#startDate").val();
+
+         if (date == "") {
+             toastr.error(messageDate);
+             document.querySelector('#startDate').style.border = "2px solid red";
+         } else {
+             document.querySelector('#startDate').style.border = "2px solid green";
+         }
+
+       }
+
+    });*@
+
+
+
+@*//  function SaveData() {
+    //      var ID = Guid.NewGuid();
+    //      var name = $('#Name').val();
+    //      var location = $('#Location').val();
+    //      var startDate = $('#StartDate').val();
+    //      var description = $('#Description').val();
+
+    //      var objJob = {ID: ID, Name : name, Location:location, StartDate:startDate, Description:description}
+
+    //  $.ajax({
+    //      async: true,
+    //      type: 'POST',
+    //      dataType: 'JSON',
+    //      contentType: 'application/json; charset=utg-8',
+    //      data: JSON.stringify(objJob),
+    //      url: '/Job/Index',
+    //      success: function (response) {
+    //          if (response.success === true) {
+    //              toastr.success(response.message, 'Success Alert',  { timeOut: 3000 })
+    //          } else {
+    //              toastr.info(response.message, 'Information Alert',  { timeOut: 3000 })
+    //          }
+    //      },
+    //      error: function () {
+    //          toastr.error('There is some problem to proccess your request', 'Error Alert',  {timeOut:3000})
+    //      }
+    //  })
+    //}*@
+
+
+
+
+
+
+
 
 
 

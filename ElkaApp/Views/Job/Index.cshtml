@@ -10,7 +10,7 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-top: 25px;
+        padding: 0 50px 50px 50px;
     }
 
     .container-job {
@@ -22,7 +22,7 @@
         align-items: center;
         justify-content: space-between;
         margin-top: 30px;
-        height: 150px;
+        height: 130px;
     }
 
     .container-title {
@@ -41,6 +41,7 @@
         width: 20%;
         align-content: center;
         justify-content: center;
+        flex-direction:column;
     }
 
     .container-btn {
@@ -56,6 +57,10 @@
     .container-description > p {
         font-size: 11px;
     }
+    .apply{
+        border-radius:20px;
+        width:180px;
+    }
 
     @@media all and (max-width : 980px) {
         .container-title > h4, .container-title > p {
@@ -68,6 +73,9 @@
 
         .container-job-date > p {
             font-size: 10px;
+        }
+        .apply{
+            width:80px;
         }
     }
 </style>
@@ -85,7 +93,9 @@
 <div class="container">
     <h2 style="font-family:Roboto,sans-serif">JOBS</h2>
     <div class="container-btn">
-        <a href="@Url.Action("Create", "Job")"><button class="btn btn-primary btn-class float-end">ADD JOB</button></a>
+        @if (this.User.IsInRole("Admin")) { 
+        <a href="@Url.Action("Create", "Job")" class="btn btn-primary btn-class float-end">ADD JOB</a>
+        }
     </div>
     @if (Model != null)
     {
@@ -104,6 +114,10 @@
 
                 <div class="container-job-date">
                     <p> @item.StartDate </p>
+                  @if (this.User.IsInRole("User"))
+                  {
+                    <button class="btn btn-success apply" id="btnApply">APPLY</button>
+                  }
                 </div>
             </div>
         }
@@ -115,9 +129,5 @@
 
     }
 
-
-
-
-
-
+</div>
 
