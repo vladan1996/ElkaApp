@@ -82,41 +82,42 @@
             <img src="~/Content/img/Logo.png" />
 
         </div>
-     
+        @using (Html.BeginForm("Company", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
+        {
 
         <section id="form">
 
-            @using (Html.BeginForm("Company", "Index", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post))
-            {
-
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Name, "COMPANY NAME*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Name, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Street, "STREET*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Street, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.City, "CITY*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.City, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Phone, "PHONE*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Phone, new { @class = "input_circle" })
-                </div>
-                <div class="form_div">
-                    @Html.LabelFor(m => m.Email, "EMAIL*", new { @class = "label_input" })
-                    @Html.TextBoxFor(m => m.Email, new { @class = "input_circle" })
-                </div>
-
-                <div class="div_button">
-                    <input type="submit" value="SAVE" class="input_circle_button" />
-                </div>
 
 
-            }
-            </section>
+            <div class="form_div">
+                @Html.LabelFor(m => m.Name, "COMPANY NAME*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Name, new { @class = "input_circle" })
+            </div>
+            <div class="form_div">
+                @Html.LabelFor(m => m.Street, "STREET*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Street, new { @class = "input_circle" })
+            </div>
+            <div class="form_div">
+                @Html.LabelFor(m => m.City, "CITY*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.City, new { @class = "input_circle" })
+            </div>
+            <div class="form_div">
+                @Html.LabelFor(m => m.Phone, "PHONE*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Phone, new { @class = "input_circle" })
+            </div>
+            <div class="form_div">
+                @Html.LabelFor(m => m.Email, "EMAIL*", new { @class = "label_input" })
+                @Html.TextBoxFor(m => m.Email, new { @class = "input_circle" })
+            </div>
+
+            <div class="div_button">
+                <input type="submit" value="SAVE" class="input_circle_button" />
+            </div>
+
+
+            
+        </section>
+        }
     </div>
 
 

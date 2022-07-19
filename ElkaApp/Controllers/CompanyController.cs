@@ -15,9 +15,9 @@ namespace ElkaApp.Controllers
             return View();
         }
 
-       public ActionResult SaveCompany(Company model)
-        {
+       //public ActionResult SaveCompany(Company model)
+       // {
 
-        }
+       // }
     }
 }

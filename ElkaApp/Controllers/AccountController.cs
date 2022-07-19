@@ -22,7 +22,7 @@ namespace ElkaApp.Controllers
         public AccountController()
         {
         }
-
+  
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
             UserManager = userManager;
@@ -76,11 +76,14 @@ namespace ElkaApp.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
+           // model.RememberMe = true;
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
+                    var userx = UserManager.FindByEmail(model.Email); //GetEmailAsync(model.Email);  //UserManager.GetEmailAsync(model.Email);
+                    TempData["name"] = userx.Id;//user.Id;
+                    return RedirectToAction("Index", "Home");
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
@@ -152,8 +155,8 @@ namespace ElkaApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                var userName = model.Name + " " + model.Surname;
-                var user = new ApplicationUser { UserName = userName, Email = model.Email };
+               
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 var newUser = BLL.RegisterNewUser(user.Id, model);
                 if (result.Succeeded)
