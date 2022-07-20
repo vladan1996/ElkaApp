@@ -77,5 +77,11 @@ namespace ElkaApp.Controllers
             return Json(BLL.GetUser(id), JsonRequestBehavior.AllowGet); //Json(BLL.GetUser(id));
         }
 
+
+        public ActionResult ViewAllUsers ()
+        {
+            
+            return View();
+        }
     }
 }
