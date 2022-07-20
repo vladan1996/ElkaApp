@@ -83,5 +83,26 @@ namespace ElkaApp.Controllers
             
             return View();
         }
+
+        public ActionResult updateUserByAdmin()
+        {
+            return View();
+        }
+        
+        public async Task updateUserByAdmin(User user)
+        {
+            var u = await UserManager.FindByIdAsync(user.ID.ToString());
+            BLL.UpdateUserByAdmin(user);
+
+            u.Email = user.Email;
+            u.UserName = user.Email;
+            //     UserManager.UpdateAsync()
+            await UserManager.UpdateAsync(u);
+        }
+
+        public JsonResult GetDataByAdmin(Guid id)
+        {
+            return Json(BLL.getUserByAdmin(id), JsonRequestBehavior.AllowGet);
+        }
     }
 }

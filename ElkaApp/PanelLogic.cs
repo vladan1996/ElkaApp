@@ -119,7 +119,29 @@ namespace ElkaApp
             return user.ID;
         }
 
-        
+        public User getUserByAdmin(Guid id)
+        {
+            var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            return obj;
+        }
+
+        public void UpdateUserByAdmin(User user)
+        {
+            var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
+
+            
+            obj.Fullname = user.Fullname;
+            obj.Phone = user.Phone;
+            obj.City = user.City;
+            obj.Email = user.Email != null ? user.Email : obj.Email;
+
+            var id = user.ID.ToString();
+
+
+            DB.SaveChanges();
+
+        }
+
     }
 
 }
