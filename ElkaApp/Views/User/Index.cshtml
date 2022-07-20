@@ -20,17 +20,17 @@
         border: 2px solid #b7bac7;
         padding: 20px;
         border-radius: 20px;
-        margin-bottom:5px;
+        margin-bottom: 5px;
     }
 
         .pic img {
             width: 100px;
             height: 100px;
-            border-radius:50px;
+            border-radius: 50px;
         }
 
     .grid-container {
-        margin-top:20px;
+        margin-top: 20px;
         display: grid;
         grid-template-columns: auto auto;
         gap: 20px;
@@ -73,6 +73,7 @@
     .birthdate {
         text-transform: uppercase;
     }
+
     .imagePreview {
         width: 100px;
         height: 100px;
@@ -84,21 +85,21 @@
         border: none;
     }
 
-    .form-input input{
-        display:none;
+    .form-input input {
+        display: none;
     }
 
     .form-input label {
         font-size: small;
         background-color: #176AE7;
-        color:white;
-        width:110px;
-        font-weight:200;
-        text-align:center;
-        margin:auto;
-        border-radius:10px;
-        padding:3px;
-        cursor:pointer;
+        color: white;
+        width: 110px;
+        font-weight: 200;
+        text-align: center;
+        margin: auto;
+        border-radius: 10px;
+        padding: 3px;
+        cursor: pointer;
     }
 </style>
 <div class="user">
@@ -112,8 +113,8 @@
         </div>
     </div>
     <div class="form-input">
-    <label for="file-ip-1">UPLOAD IMAGE</label>
-    <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
+        <label for="file-ip-1">UPLOAD IMAGE</label>
+        <input type="file" id="file-ip-1" accept="image/*" onchange="showPreview(event);">
     </div>
     <form class="grid-container" method="post" action="">
         <div class="grid-item">
@@ -172,79 +173,102 @@
     }
      
 
+    var picture = null;
     let data = localStorage.getItem('userID');
-
     const btn = document.querySelector('.btnUser');
 
     const name = document.querySelector('.name');
     const lastName = document.querySelector('.lastName');
-    const brithdate = document.querySelector('.birthdate');
+    const birthdate = document.querySelector('.birthdate');
     const street = document.querySelector('.street');
     const city = document.querySelector('.city');
     const phone = document.querySelector('.phone');
     const email = document.querySelector('.email');
     const profession = document.querySelector('.profession');
- 
+    var preview = document.getElementById("file-ip-1-preview");
 
-        $.ajax({
-            type: "GET",
-            url: "/User/GetData/" + data,
-            dataType: "json",
-            success: function (rez) {
-                
-                var result = rez.Fullname.trim().split(/\s+/);
-                name.value = result[0];
-                lastName.value = result[1];
-                street.value = rez.Street;
-                city.value = rez.City;
-                phone.value = rez.Phone;
-                email.value = rez.Email;
-                profession.value = rez.Profession;
-            },
-            error: (err) => {
-                console.log("err");
-                console.log(err)
+    function showPreview(event) {
+        if (event.target.files.length > 0) {
+            picture = event.target.files[0];
+            var url = URL.createObjectURL(event.target.files[0]);
+            preview.src = url;
+            preview.style.display = "block";
+        }
+    }
+
+    $.ajax({
+        type: "GET",
+        url: "/User/GetData/" + data,
+        dataType: "json",
+        success: function (rez) {
+
+            var result = rez.Fullname.trim().split(/\s+/);
+            name.value = result[0];
+            lastName.value = result[1];
+            birthdate.value = rez.Birthdate;
+            street.value = rez.Street;
+            city.value = rez.City;
+            phone.value = rez.Phone;
+            email.value = rez.Email;
+            profession.value = rez.Profession;
+            if (rez.FilePath != "") {
+                preview.src = rez.FilePath;
+                preview.style.display = "block";
             }
-        });
-    
-   
+        },
+        error: (err) => {
+            console.log("err");
+            console.log(err)
+        }
+    });
+
+
     btn.addEventListener('click', () => {
 
         let fullname = name.value + " " + lastName.value;
         const dataSend = {
             fullname: fullname,
-            brithdate: brithdate.value,
+            birthdate: birthdate.value,
             street: street.value,
             city: city.value,
             phone: phone.value,
             email: email.value,
             profession: profession.value,
             Id: data,
-            
-
         }
+        
+        var formData = new FormData();
+        formData.append("fullname", fullname);
+        formData.append("birthdate", birthdate.value);
+        formData.append("street", street.value);
+        formData.append("city", city.value);
+        formData.append("phone", phone.value);
+        formData.append("email", email.value);
+        formData.append("profession", profession.value);
+        formData.append("Id", data);
 
-
+        formData.append("picture", picture);
+        console.log(picture);
         $.ajax({
             type: "post",
             url: "/User/UpdateData",
-            contentType: "application/json; charset=utf-8",
-            data: JSON.stringify(dataSend),
-            dataType: "json",
+            data: formData,
+            processData: false,
+            contentType: false,
+            cache: false,
+            enctype: 'multipart/form-data',
             success: (s) => {
                 console.log("succ");
-                console.log(s);
-
+                alert("Your information has been successfully updated!")
+               
             },
             error: (data) => {
                 console.log("errr")
             }
-
         });
-        
+
     });
 
 
 
 </script>
-
