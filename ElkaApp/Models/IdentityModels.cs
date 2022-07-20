@@ -12,17 +12,9 @@ namespace ElkaApp.Models
     public class ApplicationUser : IdentityUser
     {
 
-        //public Guid ID { get; set; }
-        //public Guid UserID { get; set; }
-        //public string Fullname { get; set; }
-        //public DateTime? Brithdate { get; set; }
-        //public string Street { get; set; }
-        //public string City { get; set; }
-        //public string Phone { get; set; }
-        //public string Email { get; set; }
-        //public string Profession { get; set; }
-        //public string FilePath { get; set; }
-        //public string Role { get; set; }
+       
+
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

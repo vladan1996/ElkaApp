@@ -12,6 +12,7 @@ namespace ElkaApp.Controllers
     {
 
         // GET: Company
+        [Authorize]
         public ActionResult Index()
         {
             return View();

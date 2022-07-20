@@ -10,6 +10,8 @@ namespace ElkaApp.Controllers
     public class JobController : Controller
     {
 
+
+
         private ApplicationDbContext _context;
 
         public JobController()
@@ -17,31 +19,31 @@ namespace ElkaApp.Controllers
             _context = new ApplicationDbContext();
         }
 
-        // GET: Job 
         [Authorize]
         public ActionResult Index()
         {
             var jobs = _context.Jobs.ToList();
             return View(jobs);
         }
+
+      
+
         [Authorize]
         [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
-       [HttpPost]
-        public ActionResult Create(Job job)
-        {
-          
-            job.ID = Guid.NewGuid();
-            _context.Jobs.Add(job);
-            _context.SaveChanges();
-            ViewBag.Message = "The job has been added!";
 
-            return RedirectToAction("Index" , "Job");
-            
+
+        [Authorize]
+        [HttpPost]
+        public JsonResult Create(Job obj)
+        {           
+                obj.ID = Guid.NewGuid();
+                _context.Jobs.Add(obj);
+                _context.SaveChanges();
+                return Json(new { success = true, message = "New Job added sucessfully!" }, JsonRequestBehavior.AllowGet); 
         }
-
     }
 }
