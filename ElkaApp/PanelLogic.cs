@@ -76,7 +76,7 @@ namespace ElkaApp
             var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
 
             obj.Fullname = user.Fullname;
-            obj.Brithdate = user.Brithdate;
+            obj.Birthdate = user.Birthdate;
             obj.Street = user.Street;
             obj.City = user.City;
             obj.Phone = user.Phone;
