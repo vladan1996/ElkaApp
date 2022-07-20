@@ -250,39 +250,42 @@
                             Job Status
                         </a>
                     </li>
-                    <li class="navigation-list-item">
-                        <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Company" }, Request.Url.Scheme)">
-                            @* dodao za prelazak na company view *@
-                            <i class="fa-solid fa-building"></i>
-                            Company Info
-                        </a>
-                    </li>
-                    <li class="navigation-list-item">
-                        <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
-                            <i class="fa-solid fa-user"></i>
-                            User
-                        </a>
-                    </li>
-                    <li class="navigation-list-item">
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <li class="navigation-list-item">
+                            <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Company" }, Request.Url.Scheme)">
+                                @* dodao za prelazak na company view *@
+                                <i class="fa-solid fa-building"></i>
+                                Company Info
+                            </a>
+                        </li>
+                    }
+                        <li class="navigation-list-item">
+                            <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
+                                <i class="fa-solid fa-user"></i>
+                                User
+                            </a>
+                        </li>
+                        <li class="navigation-list-item">
 
-                        @if (Request.IsAuthenticated)
-                        {
-                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form-navigation-bar" }))
+                            @if (Request.IsAuthenticated)
                             {
-                                @Html.AntiForgeryToken()
-                                <i style="color:white" class="fa-solid fa-right-from-bracket"></i>
-                                <a class="logout-btn" href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form-navigation-bar" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    <i style="color:white" class="fa-solid fa-right-from-bracket"></i>
+                                    <a class="logout-btn" href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                                }
                             }
-                        }
-                        else
-                        {
-                            <script>
-                                toastr.info('You must log into the application!');
-                            </script>
+                            else
+                            {
+                                <script>
+                                    toastr.info('You must log into the application!');
+                                </script>
 
-                        }
-                    </li>
-                </ul>
+                            }
+                        </li>
+                    </ul>
             </div>
         </div>
         <div class="navigation-bar-btn">

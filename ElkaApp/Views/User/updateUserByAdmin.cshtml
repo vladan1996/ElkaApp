@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "updateUserByAdmin";
+}
+
+<style>
+
+    .label_input {
+        width: 150px;
+        text-align: center;
+        font-weight: bold;
+    }
+
+    @@media all and (min-width : 800px) {
+        .input_circle {
+            width: 250px;
+        }
+
+        .imagePreview {
+            height: 100px;
+        }
+
+        .imgAdd {
+            width: 15px
+        }
+
+        
+    }
+
+    .input_circle {
+        margin-top: 5%;
+        padding: 15px;
+        border-radius: 25px;
+        border: 2px solid #b7bac7;
+        font-size: medium;
+    }
+
+        .input_circle:focus {
+            outline: none;
+            border-color: #69adf0;
+        }
+
+    .form_div {
+        margin-right: 10%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+
+    .container_div {
+        padding: 50px;
+    }
+
+    .title {
+        text-align: center;
+    }
+
+    .image{
+        height:100px;
+        width:100px;
+    }
+
+    .form_item {
+        padding-right: 10%;
+    }
+
+    .save_button {
+        margin-top: 10%;
+        background-color: #176AE7;
+        color: white;
+        width: 200px;
+        padding: 10px;
+        border-radius: 20px;
+        border: 1px solid;
+    }
+
+    .div_button {
+        text-align: center;
+    }
+
+</style>
+
+
+
+<div class="container_div">
+
+    <div class="title">
+        <h2 style="text-align:center"><strong>USER INFORMATION</strong></h2>
+    </div>
+
+    
+
+    <form class="form_div">
+
+        <div class="pic">
+            <div class="imagePreview">
+                <img src="~/Content/img/Logo.png" class="image" />
+            </div>
+        </div>
+
+        <div class="form_item">
+
+            <label for="name" class="label_input">NAME*</label>
+            <input type="text" class="input_circle name" name="name" id="name" />
+        </div>
+        <div class="form_item">
+
+            <label for="lastName" class="label_input">LAST NAME*</label>
+            <input type="text" class="input_circle lastName" name="lastName" id="lastName" />
+
+        </div>
+
+        <div class="form_item">
+
+            <label for="phoneNumber" class="label_input">PHONE NUMBER*</label>
+            <input type="text" class="input_circle phoneNumber" name="phoneNumber" id="phoneNumber" />
+
+        </div>
+        <div class="form_item">
+
+            <label for="city" class="label_input">CITY*</label>
+            <input type="text" class="input_circle city" name="city" id="city" />
+
+        </div>
+        <div class="form_item">
+
+            <label for="email" class="label_input">EMAIL*</label>
+            <input type="text" class="input_circle email" name="email" id="email" />
+
+        </div>
+        <div class="div_button">
+
+            <input type="button" class="save_button" value="SAVE" id="form_button"/>
+
+        </div>
+
+    </form>
+
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+
+
+    let data = localStorage.getItem('userID');
+
+    const btn = document.querySelector('.save_button');
+
+    const name = document.querySelector('.name');
+    const lastName = document.querySelector('.lastName');
+    const city = document.querySelector('.city');
+    const phone = document.querySelector('.phone');
+    const email = document.querySelector('.email');
+
+
+    $.ajax({
+        type: "GET",
+        url: "/User/GetDataByAdmin/" + data,
+        dataType: "json",
+        success: function (rez) {
+
+            var result = rez.Fullname.trim().split(/\s+/);
+            name.value = result[0];
+            lastName.value = result[1];
+            city.value = rez.City;
+            phone.value = rez.Phone;
+            email.value = rez.Email;
+        },
+        error: (err) => {
+            console.log("err");
+            console.log(err)
+        }
+    });
+
+
+    btn.addEventListener('click', () => {
+
+        let fullname = name.value + " " + lastName.value;
+        const dataSend = {
+            fullname: fullname,
+            city: city.value,
+            phone: phone.value,
+            email: email.value,
+            Id: data,
+
+        }
+
+
+        $.ajax({
+            type: "post",
+            url: "/User/updateUserByAdmin",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(dataSend),
+            dataType: "json",
+            success: (s) => {
+                console.log("succ");
+                console.log(s);
+
+            },
+            error: (data) => {
+                console.log("errr")
+            }
+
+        });
+
+    });
+
+
+
+</script>
