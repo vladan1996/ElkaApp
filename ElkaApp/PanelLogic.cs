@@ -105,6 +105,13 @@ namespace ElkaApp
             return obj;
         }
 
+         public List<User> GetAllUsers() 
+         {
+         var obj = DB.Users.ToList();
+
+         return obj;
+          }
+
         public Guid RegisterNewUser(string ID, RegisterViewModel model)
         {
             var user = new Models.User

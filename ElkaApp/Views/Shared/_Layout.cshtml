@@ -229,7 +229,7 @@
             </div>
 
             <div class="sidebar-logo-container">
-                <img class="logo-profile" src="~/Content/img/Profile.png" />
+                <img class="logo-profile" id="logo-profile123" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" />
             </div>
 
             <div class="sidebar-middle">
@@ -314,8 +314,6 @@
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
     <script>
-
-
         let sidebarHeader = document.querySelector('.sidebar-header');
         let sidebarToggle = document.querySelector(".sidebarToggle");
 
@@ -332,6 +330,32 @@
         document.querySelector('.footer-text').classList.toggle('active');
     })
 
+
+        function setProfilePicture() {
+            let id = localStorage.getItem('userID');
+            if (id === null) {
+                setTimeout(setProfilePicture, 100);
+                return;
+            }
+            $.ajax({
+                type: "GET",
+                url: "/User/GetData/" + id,
+                dataType: "json",
+                success: function (rez) {
+
+                    var profilePic = document.getElementById("logo-profile123");
+                    if (rez.FilePath != "") {
+                        profilePic.src = rez.FilePath;
+                        profilePic.style.display = "block";
+                    }
+                },
+                error: (err) => {
+                    console.log("err");
+                    console.log(err)
+                }
+            });
+        }
+        setTimeout(setProfilePicture, 100);
     const items = document.querySelectorAll('.navigation-list-item');
 
         $(document).ready(function () {
