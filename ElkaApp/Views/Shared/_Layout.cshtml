@@ -229,7 +229,15 @@
             </div>
 
             <div class="sidebar-logo-container">
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <img class="logo-profile" id="logo-profile123" src="~/Content/img/Profile.png" />
+                }
+                else
+                {
                 <img class="logo-profile" id="logo-profile123" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" />
+
+                }
             </div>
 
             <div class="sidebar-middle">
@@ -260,32 +268,46 @@
                             </a>
                         </li>
                     }
+                    @if (this.User.IsInRole("User"))
+                    {
                         <li class="navigation-list-item">
                             <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
                                 <i class="fa-solid fa-user"></i>
                                 User
                             </a>
                         </li>
+                    }
+                    else
+                    {
                         <li class="navigation-list-item">
-
-                            @if (Request.IsAuthenticated)
-                            {
-                                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form-navigation-bar" }))
-                                {
-                                    @Html.AntiForgeryToken()
-                                    <i style="color:white" class="fa-solid fa-right-from-bracket"></i>
-                                    <a class="logout-btn" href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
-                                }
-                            }
-                            else
-                            {
-                                <script>
-                                    toastr.info('You must log into the application!');
-                                </script>
-
-                            }
+                            <a href="@Url.Action("ViewAllUsers", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
+                                <i class="fa-solid fa-user"></i>
+                                User
+                            </a>
                         </li>
-                    </ul>
+                    }
+
+
+                    <li class="navigation-list-item">
+
+                        @if (Request.IsAuthenticated)
+                        {
+                            using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "form-navigation-bar" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <i style="color:white" class="fa-solid fa-right-from-bracket"></i>
+                                <a class="logout-btn" href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>
+                            }
+                        }
+                        else
+                        {
+                            <script>
+                                toastr.info('You must log into the application!');
+                            </script>
+
+                        }
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="navigation-bar-btn">
@@ -342,9 +364,13 @@
                 url: "/User/GetData/" + id,
                 dataType: "json",
                 success: function (rez) {
+                    console.log('ress');
+                    console.log(rez);
+
 
                     var profilePic = document.getElementById("logo-profile123");
                     if (rez.FilePath != "") {
+
                         profilePic.src = rez.FilePath;
                         profilePic.style.display = "block";
                     }

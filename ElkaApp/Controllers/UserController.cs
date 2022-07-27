@@ -91,16 +91,21 @@ namespace ElkaApp.Controllers
         {
             return View();
         }
-        
-        public async Task updateUserByAdmin(User user)
+
+        [Authorize]
+        [HttpPost]
+        public async Task<JsonResult> updateUserByAdmin2(User user)
         {
-            var u = await UserManager.FindByIdAsync(user.ID.ToString());
-            BLL.UpdateUserByAdmin(user);
+            ApplicationUser u =  await UserManager.FindByIdAsync(user.ID.ToString());
+          
+            BLL.UpdateUserDataByAdmin(user);
 
             u.Email = user.Email;
             u.UserName = user.Email;
-            //     UserManager.UpdateAsync()
+      
             await UserManager.UpdateAsync(u);
+           return Json(user, JsonRequestBehavior.AllowGet);
+
         }
 
         public JsonResult GetDataByAdmin(Guid id)

@@ -53,6 +53,7 @@
 <script>
     
     localStorage.clear();
+    const map1 = new Map();
     console.log("ja ")
     $.ajax({
         type: "GET",
@@ -90,19 +91,27 @@
                     phoneEmail.innerText = ((rez[i].Phone==null)?"":rez[i].Phone) + rez[i].Email;
                     profession.innerText = rez[i].Profession;
                     btn1.innerText = "EDIT";
-                    btn1.value = rez[i].UserID;
+                    /*btn1.value = rez[i].UserID;*/
                     console.log(btn1.value);
                     btn2.value = rez[i].UserID;
                     btn2.innerText = "DELETE";
                     btn1.style = "color:blue";
                     btn2.style = "color:red";
+                    map1.set(rez[i].UserID, btn1)
+                    
+                }
+                console.log(map1)
 
-                    btn1.addEventListener('click', () => {
+                for (const [key, values] of map1.entries()) {
+
+                    values.addEventListener('click', () => {
                         console.log(window.location)
-                        localStorage.setItem("UserID", btn1.value)
+                        localStorage.setItem("UserID", key)
                         location.replace(location.origin + "/User/updateUserByAdmin")
-                       
+
                     })
+                
+
                 }
             }
            

@@ -12,7 +12,7 @@ using ElkaApp.Controllers;
 //[assembly: OwinStartup(typeof(ElkaApp.Startup))];
 namespace ElkaApp
 {
-    public partial class PanelLogic: IDisposable
+    public partial class PanelLogic : IDisposable
     {
         protected Models.ApplicationDbContext DB;
         private ApplicationUserManager _userManager;
@@ -38,7 +38,7 @@ namespace ElkaApp
         //        _userManager = value;
         //    }
         //}
-        
+
 
 
         public void Dispose()
@@ -46,11 +46,11 @@ namespace ElkaApp
             if (DB != null)
                 DB.Dispose();
         }
- 
+
 
         public void AddCompany(Company company)
         {
-            
+
             //var user = new Models.User;
 
 
@@ -82,18 +82,18 @@ namespace ElkaApp
             obj.Phone = user.Phone;
             obj.Email = user.Email != null ? user.Email : obj.Email;
             obj.Profession = user.Profession;
-            obj.FilePath = user.FilePath;
+           
 
-           var id = user.ID.ToString();
+            var id = user.ID.ToString();
 
 
             DB.SaveChanges();
-          //  var aspUser = _userManager.FindById(id);  //.Users.First(x => x.Id == id);
-          //     aspUser.Email = user.Email;
-          
+            //  var aspUser = _userManager.FindById(id);  //.Users.First(x => x.Id == id);
+            //     aspUser.Email = user.Email;
+
             //var us = UserManager.FindById(id);
-            
-           
+
+
 
             //return obj;
 
@@ -105,12 +105,12 @@ namespace ElkaApp
             return obj;
         }
 
-         public List<User> GetAllUsers() 
-         {
-         var obj = DB.Users.ToList();
+        public List<User> GetAllUsers()
+        {
+            var obj = DB.Users.ToList();
 
-         return obj;
-          }
+            return obj;
+        }
 
         public Guid RegisterNewUser(string ID, RegisterViewModel model)
         {
@@ -132,11 +132,11 @@ namespace ElkaApp
             return obj;
         }
 
-        public void UpdateUserByAdmin(User user)
+        public void UpdateUserDataByAdmin(User user)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
 
-            
+
             obj.Fullname = user.Fullname;
             obj.Phone = user.Phone;
             obj.City = user.City;

@@ -58,11 +58,6 @@
         text-align: center;
     }
 
-    .image{
-        height:100px;
-        width:100px;
-    }
-
     .form_item {
         padding-right: 10%;
     }
@@ -81,6 +76,14 @@
         text-align: center;
     }
 
+    .div_picture img {
+        width:100px;
+        height:100px;
+        border-radius: 10px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+    }
+
 </style>
 
 
@@ -95,10 +98,8 @@
 
     <form class="form_div">
 
-        <div class="pic">
-            <div class="imagePreview">
-                <img src="~/Content/img/Logo.png" class="image" />
-            </div>
+        <div class="div_picture">
+            <img class="logo-profile" id="profile_picture" @*src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"*@ />
         </div>
 
         <div class="form_item">
@@ -146,14 +147,14 @@
 <script>
 
 
-    let data = localStorage.getItem('userID');
-
+    let data = localStorage.getItem('UserID');
+    console.log(data)
     const btn = document.querySelector('.save_button');
 
     const name = document.querySelector('.name');
     const lastName = document.querySelector('.lastName');
     const city = document.querySelector('.city');
-    const phone = document.querySelector('.phone');
+    const phone = document.querySelector('.phoneNumber');
     const email = document.querySelector('.email');
 
 
@@ -162,19 +163,28 @@
         url: "/User/GetDataByAdmin/" + data,
         dataType: "json",
         success: function (rez) {
-
+            console.log('ress succ');
+            console.log(rez);
+            console.log(rez.FilePath);
             var result = rez.Fullname.trim().split(/\s+/);
             name.value = result[0];
             lastName.value = result[1];
             city.value = rez.City;
-            phone.value = rez.Phone;
             email.value = rez.Email;
+            phone.value = rez.Phone;
+            var profilePic = document.getElementById("profile_picture");
+            if (rez.FilePath != "") {
+                profilePic.src = rez.FilePath;
+                profilePic.style.display = 'block';
+            }
         },
         error: (err) => {
             console.log("err");
             console.log(err)
         }
     });
+
+   
 
 
     btn.addEventListener('click', () => {
@@ -186,23 +196,24 @@
             phone: phone.value,
             email: email.value,
             Id: data,
-
         }
 
 
         $.ajax({
-            type: "post",
-            url: "/User/updateUserByAdmin",
+            type: "POST",
+            url: '/User/updateUserByAdmin2',
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(dataSend),
             dataType: "json",
-            success: (s) => {
-                console.log("succ");
-                console.log(s);
-
+            async:false,
+            success: function(data) {
+                if (data.ID) {
+                    toastr.success(data.message, 'Data has been updated', { timeOut: 3000 });
+                }       
             },
-            error: (data) => {
-                console.log("errr")
+            error:function(data){
+
+                toastr.error(data.message, 'Information Alert', { timeOut: 3000 })
             }
 
         });
