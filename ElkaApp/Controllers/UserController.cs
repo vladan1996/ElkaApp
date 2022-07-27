@@ -43,7 +43,7 @@ namespace ElkaApp.Controllers
         public async Task UpdateData(User user, HttpPostedFileBase picture)
         {
             var us = await UserManager.FindByIdAsync(user.ID.ToString());
-
+          
             if (picture != null)
             {
                 if (!Directory.Exists(Server.MapPath("~/Content/Image/")))
@@ -92,7 +92,7 @@ namespace ElkaApp.Controllers
             return View();
         }
         
-        public async Task updateUserByAdmin(User user)
+        public async Task updateUserByAdmin2(User user)
         {
             var u = await UserManager.FindByIdAsync(user.ID.ToString());
             BLL.UpdateUserByAdmin(user);
@@ -106,6 +106,23 @@ namespace ElkaApp.Controllers
         public JsonResult GetDataByAdmin(Guid id)
         {
             return Json(BLL.getUserByAdmin(id), JsonRequestBehavior.AllowGet);
+        }
+
+        public async Task<JsonResult> DeleteData(Guid id)
+        {
+            var isSucces = false;
+
+            if (id != null) {
+                isSucces = true;
+            }
+            var u = await UserManager.FindByIdAsync(id.ToString());
+            await UserManager.DeleteAsync(u);
+            BLL.DeleteUser(id);
+          
+            return Json(isSucces, JsonRequestBehavior.AllowGet);
+
+
+
         }
     }
 }

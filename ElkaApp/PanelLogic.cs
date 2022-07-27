@@ -82,20 +82,15 @@ namespace ElkaApp
             obj.Phone = user.Phone;
             obj.Email = user.Email != null ? user.Email : obj.Email;
             obj.Profession = user.Profession;
-            obj.FilePath = user.FilePath;
+            if (user.FilePath != null)
+            {
+                obj.FilePath = user.FilePath;
+            }
 
-           var id = user.ID.ToString();
+            //var id = user.ID.ToString();
 
 
             DB.SaveChanges();
-          //  var aspUser = _userManager.FindById(id);  //.Users.First(x => x.Id == id);
-          //     aspUser.Email = user.Email;
-          
-            //var us = UserManager.FindById(id);
-            
-           
-
-            //return obj;
 
         }
 
@@ -145,6 +140,14 @@ namespace ElkaApp
             var id = user.ID.ToString();
 
 
+            DB.SaveChanges();
+
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            var user = DB.Users.FirstOrDefault(x => x.UserID == id);
+            DB.Users.Remove(user);
             DB.SaveChanges();
 
         }
