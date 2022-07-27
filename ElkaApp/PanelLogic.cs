@@ -12,7 +12,7 @@ using ElkaApp.Controllers;
 //[assembly: OwinStartup(typeof(ElkaApp.Startup))];
 namespace ElkaApp
 {
-    public partial class PanelLogic: IDisposable
+    public partial class PanelLogic : IDisposable
     {
         protected Models.ApplicationDbContext DB;
         private ApplicationUserManager _userManager;
@@ -38,7 +38,7 @@ namespace ElkaApp
         //        _userManager = value;
         //    }
         //}
-        
+
 
 
         public void Dispose()
@@ -46,11 +46,11 @@ namespace ElkaApp
             if (DB != null)
                 DB.Dispose();
         }
- 
+
 
         public void AddCompany(Company company)
         {
-            
+
             //var user = new Models.User;
 
 
@@ -97,15 +97,19 @@ namespace ElkaApp
         public User GetUser(Guid id)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj.FilePath == null)
+            {
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            }
             return obj;
         }
 
-         public List<User> GetAllUsers() 
-         {
-         var obj = DB.Users.ToList();
+        public List<User> GetAllUsers()
+        {
+            var obj = DB.Users.ToList();
 
-         return obj;
-          }
+            return obj;
+        }
 
         public Guid RegisterNewUser(string ID, RegisterViewModel model)
         {
@@ -124,14 +128,18 @@ namespace ElkaApp
         public User getUserByAdmin(Guid id)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj.FilePath == null)
+            {
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            }
             return obj;
         }
 
-        public void UpdateUserByAdmin(User user)
+        public void UpdateUserDataByAdmin(User user)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
 
-            
+         
             obj.Fullname = user.Fullname;
             obj.Phone = user.Phone;
             obj.City = user.City;
