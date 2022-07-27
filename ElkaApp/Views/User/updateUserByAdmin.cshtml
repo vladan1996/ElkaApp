@@ -23,8 +23,6 @@
         .imgAdd {
             width: 15px
         }
-
-        
     }
 
     .input_circle {
@@ -77,13 +75,12 @@
     }
 
     .div_picture img {
-        width:100px;
-        height:100px;
+        width: 100px;
+        height: 100px;
         border-radius: 10px;
         -webkit-border-radius: 50px;
         -moz-border-radius: 50px;
     }
-
 </style>
 
 
@@ -94,12 +91,14 @@
         <h2 style="text-align:center"><strong>USER INFORMATION</strong></h2>
     </div>
 
-    
+
 
     <form class="form_div">
 
         <div class="div_picture">
-            <img class="logo-profile" id="profile_picture" @*src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png"*@ />
+           
+                <img class="logo-profile" id="profile_picture" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" />
+            
         </div>
 
         <div class="form_item">
@@ -134,7 +133,7 @@
         </div>
         <div class="div_button">
 
-            <input type="button" class="save_button" value="SAVE" id="form_button"/>
+            <input type="button" class="save_button" value="SAVE" id="form_button" />
 
         </div>
 
@@ -177,6 +176,7 @@
                 profilePic.src = rez.FilePath;
                 profilePic.style.display = 'block';
             }
+            
         },
         error: (err) => {
             console.log("err");
@@ -184,7 +184,7 @@
         }
     });
 
-   
+
 
 
     btn.addEventListener('click', () => {
@@ -205,13 +205,13 @@
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(dataSend),
             dataType: "json",
-            async:false,
-            success: function(data) {
+            async: false,
+            success: function (data) {
                 if (data.ID) {
                     toastr.success(data.message, 'Data has been updated', { timeOut: 3000 });
-                }       
+                }
             },
-            error:function(data){
+            error: function (data) {
 
                 toastr.error(data.message, 'Information Alert', { timeOut: 3000 })
             }

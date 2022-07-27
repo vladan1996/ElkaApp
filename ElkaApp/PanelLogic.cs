@@ -82,7 +82,10 @@ namespace ElkaApp
             obj.Phone = user.Phone;
             obj.Email = user.Email != null ? user.Email : obj.Email;
             obj.Profession = user.Profession;
-           
+            if(user.FilePath != null)
+            {
+                obj.FilePath = user.FilePath;
+            }
 
             var id = user.ID.ToString();
 
@@ -102,6 +105,10 @@ namespace ElkaApp
         public User GetUser(Guid id)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj.FilePath == null)
+            {
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            }
             return obj;
         }
 
@@ -129,6 +136,10 @@ namespace ElkaApp
         public User getUserByAdmin(Guid id)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj.FilePath == null)
+            {
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            }
             return obj;
         }
 
@@ -136,7 +147,7 @@ namespace ElkaApp
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
 
-
+         
             obj.Fullname = user.Fullname;
             obj.Phone = user.Phone;
             obj.City = user.City;
