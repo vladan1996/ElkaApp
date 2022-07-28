@@ -1,0 +1,136 @@
+﻿@model ElkaApp.Models.JobStatus
+
+@*@model List<ElkaApp.Models.JobStatus>*@
+
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .container_div {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        align-content: center;
+        justify-content: space-between;
+        margin: 5px;
+    }
+
+    .form-group {
+        font-weight: 600;
+    }
+
+    .form-horizontal {
+        box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.3);
+        margin-top: 20px;
+    }
+    .container_back{
+        margin-left:300px;
+
+    }
+</style>
+
+<div class="container">
+    <h2>Job Status Edit</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => Model.ID)
+
+        <div class="container_back">
+            <div class="col-md-5">
+                @*<input type="submit" value="Save" class="btn btn-success" />*@
+                <a class="text-decoration-none"  href="@Url.Action("Index", null, new { area = string.Empty, controller = "Status" }, Request.Url.Scheme)"><i class="fa-regular fa-circle-left"></i></a>
+            </div>
+        </div>
+
+        <div class="container_div">
+            <label class="form-group">APPLICANT</label>
+            <div class="col-md-5">
+                @Model.User.Fullname
+            </div>
+        </div>
+
+        <div class="container_div">
+            <label class="form-group">APPLICATION DATE AND TIME</label>
+            <div class="col-md-6">
+                @Model.Job.StartDate
+            </div>
+        </div>
+
+        <div class="container_div">
+            <label class="form-group">JOB NAME,LOCATION AND START DATE</label>
+            <div class="col-md-6">
+                @Model.Job.Name <br /> @Model.Job.Location <br /> @Model.Job.StartDate
+
+            </div>
+        </div>
+
+        <div class="container_div">
+            <label class="form-group">APPLICATION EMAIL AND PHONE</label>
+            <div class="col-md-8">
+                @Model.User.Email <br /> @Model.User.Phone
+            </div>
+        </div>
+
+        <div class="container_div">
+            <label class="form-group">ADDRESS AND CITY</label>
+            <div class="col-md-10">
+                @Model.User.Street <br /> @Model.User.City
+            </div>
+        </div>
+
+        @*Dropdown button*@
+
+        <div class="container_div">
+            <div class="btn-group">
+                @if (Model.Status.StatusName == "Rejected")
+                {
+                    <button type="button" class="btn btn-danger">@Model.Status.StatusName</button>
+                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Accepted</a></li>
+                     
+                    </ul>
+                }
+                else
+                {
+                    <button type="button" class="btn btn-success">@Model.Status.StatusName</button>
+                    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="visually-hidden">Toggle Dropdown</span>
+                    </button>
+
+                    <ul class="dropdown-menu">
+                        
+                        <li><a class="dropdown-item" href="#">Rejected</a></li>
+                    </ul>
+                }
+
+
+                @*<ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">Accepted</a></li>
+                    <li><a class="dropdown-item" href="#">Rejected</a></li>
+                </ul>*@
+
+            </div>
+        </div>
+
+
+
+    </div>
+        }
+
+    </div>

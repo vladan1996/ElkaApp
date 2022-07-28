@@ -68,9 +68,6 @@ namespace ElkaApp
             DB.Companies.Add(obj);
             DB.SaveChanges();
         }
-
-
-
         public void UpdateUser(User user)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
@@ -119,6 +116,47 @@ namespace ElkaApp
             return user.ID;
         }
 
+        public void CreateJob(Job obj)
+        {
+            obj.ID = Guid.NewGuid();
+            DB.Jobs.Add(obj);
+            DB.SaveChanges();
+            
+
+        }
+
+        public bool JobApplication (string userID, Guid jobID)
+        {
+            var id = Guid.Parse(userID);
+            var user = DB.Users.FirstOrDefault(x => x.UserID == id);
+            var status = DB.Statuses.FirstOrDefault(x => x.StatusName == "Rejected");
+
+            var jobStatus = new Models.JobStatus
+            {
+                ID = Guid.NewGuid(),
+                UserID = user.ID,
+                JobID = jobID,
+                StatusID = status.ID,
+            };
+
+            DB.JobStatuses.Add(jobStatus);
+            DB.SaveChanges();
+
+            return true;
+        }
+
+        public List<JobStatus> GetJobStatusDate()
+        {
+            var data = DB.JobStatuses.ToList();
+            return data;
+        }
+
+        public JobStatus GetApplicant(Guid id)
+        {
+            var applicant = DB.JobStatuses.Single(x => x.ID == id);
+
+            return applicant;
+        }
     }
 
 }

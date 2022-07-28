@@ -41,7 +41,7 @@
         width: 20%;
         align-content: center;
         justify-content: center;
-        flex-direction:column;
+        flex-direction: column;
     }
 
     .container-btn {
@@ -57,9 +57,10 @@
     .container-description > p {
         font-size: 11px;
     }
-    .apply{
-        border-radius:20px;
-        width:180px;
+
+    .apply {
+        border-radius: 20px;
+        width: 180px;
     }
 
     @@media all and (max-width : 980px) {
@@ -74,8 +75,9 @@
         .container-job-date > p {
             font-size: 10px;
         }
-        .apply{
-            width:80px;
+
+        .apply {
+            width: 80px;
         }
     }
 </style>
@@ -93,8 +95,9 @@
 <div class="container">
     <h2 style="font-family:Roboto,sans-serif">JOBS</h2>
     <div class="container-btn">
-        @if (this.User.IsInRole("Admin")) { 
-        <a href="@Url.Action("Create", "Job")" class="btn btn-primary btn-class float-end">ADD JOB</a>
+        @if (this.User.IsInRole("Admin"))
+        {
+            <a href="@Url.Action("Create", "Job")" class="btn btn-primary btn-class float-end">ADD JOB</a>
         }
     </div>
     @if (Model != null)
@@ -114,10 +117,10 @@
 
                 <div class="container-job-date">
                     <p> @item.StartDate </p>
-                  @if (this.User.IsInRole("User"))
-                  {
-                    <button class="btn btn-success apply" id="btnApply">APPLY</button>
-                  }
+                    @if (this.User.IsInRole("User"))
+                    {
+                        <button class="btn btn-success apply" id="btnApply" data-id="@item.ID">APPLY</button>
+                    }
                 </div>
             </div>
         }
@@ -130,4 +133,43 @@
     }
 
 </div>
+@section Scripts
+{
+<script>
+    const btns = document.querySelectorAll("#btnApply");
+    const div = document.querySelector('.container-job');
+   
+    btns.forEach(item => {
+     
+        
+        item.addEventListener('click', () => {
+            console.log(item)
+            $.ajax({
+                type: 'POST',
+                url: '/Job/JobApply',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                data: JSON.stringify({ jobID: item.getAttribute('data-id') }),
+                success: (data) => {
 
+                    if (data.success === true) {
+                   
+                        toastr.success(data.message, 'Success Alert', { timeOut: 3000 });
+             
+                    } else {
+                        toastr.error(data.message, 'Information Alert', { timeOut: 3000 })
+                    }
+
+
+                },
+                error: (data) => {
+                    toastr.error(data.message, 'Error', { timeOut: 3000 })
+                }
+            });
+
+
+        });
+    });
+
+</script>
+}

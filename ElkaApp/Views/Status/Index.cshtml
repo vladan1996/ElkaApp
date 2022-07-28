@@ -1,0 +1,71 @@
+﻿@model List<ElkaApp.Models.JobStatus>
+
+
+<style>
+    .container {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        justify-content: center;
+    }
+
+    .span {
+        color: red;
+    }
+
+        .span.green {
+            color: #00FF00;
+        }
+</style>
+
+
+<div class="container">
+    <h2 class="">Job Status</h2>
+    <hr />
+
+    @if (Model.Count != 0)
+    {
+
+        <div class="table-responsive">
+
+            <table class="table table-bordered align-middle">
+                <thead>
+                    <tr>
+                        <th scope="col">OPTION</th>
+                        <th scope="col">APPLICANT</th>
+                        <th scope="col">JOB NAME</th>
+                        <th scope="col">APPLICANT EMAIL AND PHONE</th>
+                        <th scope="col">ADDRESS AND CITY</th>
+                        <th scope="col">JOB STATUS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            
+                            <th scope="row">@Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-info" })</th>
+                            <td>@item.User.Fullname <br /> @item.Job.StartDate</td>
+                            <td>@item.Job.Name</td>
+                            <td>@item.User.Email <br /> @item.User.Phone</td>
+                            <td>@item.User.Street <br /> @item.User.City</td>
+                            @if (item.Status.StatusName == "Rejected")
+                            {
+                                <td><span class="span">◉ @item.Status.StatusName</span></td>
+                            }
+                            else
+                            {
+                                <td><span class="span green">◉ @item.Status.StatusName</span></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+
+
+
+
