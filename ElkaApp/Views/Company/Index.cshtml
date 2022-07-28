@@ -39,9 +39,20 @@
         font-weight: bold;
     }
 
+    @@media all and (min-width : 800px) {
+        .input_circle {
+            width: 250px;
+        }
+        .imagePreview {
+            height: 100px;
+        }
+        .imgAdd {
+            width: 15px
+        }
+    }
+
     .input_circle {
         margin-top: 5%;
-        width: 350px;
         padding: 15px;
         border-radius: 25px;
         border: 2px solid #b7bac7;
@@ -53,10 +64,6 @@
             border-color: #69adf0;
         }
 
-    img {
-        width: 150px;
-        height: auto;
-    }
 
     #form {
         margin-right: 10%;
@@ -69,7 +76,8 @@
     }
 
     .title-img {
-        text-align: center
+        text-align: center;
+        margin-bottom: 30px;
     }
 
     .form_div {
@@ -132,9 +140,6 @@
         font-size: 15px;
     }
 
-    .title-img{
-        margin-bottom: 30px;
-    }
     #FilePath-error{
         margin-left:0px;
     }
@@ -145,7 +150,7 @@
 
     <div class="title-img">
 
-        <h2>COMPANY INFO</h2>
+        <h2><strong>COMPANY INFO</strong></h2>
 
     </div>
 

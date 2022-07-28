@@ -1,0 +1,168 @@
+﻿@{
+    ViewBag.Title = "ViewAllUsers";
+}
+<style>
+    .userContainer {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    th {
+        width: 150px;
+        height: 65px;
+        text-align: center;
+        font-weight: normal;
+    }
+
+    table, th, td {
+        border: 1px solid;
+    }
+
+    h1 {
+        margin-bottom: 30px;
+        margin-top: 40px;
+    }
+
+    button {
+        border: none;
+        background-color: white;
+    }
+</style>
+<div class="userContainer">
+    <h1>USERS</h1>
+
+    <table id="users">
+        <tr>
+            <th></th>
+            <th>FULL NAME</th>
+            <th>BIRTHDATE</th>
+            <th>STREET</th>
+            <th>CITY</th>
+            <th>PHONE, EMAIL</th>
+            <th>PROFESSION</th>
+        </tr>
+
+    </table>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+<script>
+    
+    localStorage.clear();
+    const map1 = new Map();
+    console.log("ja ")
+    $.ajax({
+        type: "GET",
+        url: "/User/GetUsers",
+        dataType: "json",
+        success: function (rez) {
+            console.log(rez)
+            if (rez != null) {
+                var i = 0;
+                const map1 = new Map();
+                const map2 = new Map();
+                const table = document.getElementById("users");
+                for (i = 0; i < rez.length; i++) {
+                    const tr = document.createElement("tr");
+                    const th = document.createElement("th");
+                    const btn1 = document.createElement("button");
+                    const btn2 = document.createElement("button");
+                    const fullname = document.createElement("th");
+                    const birthdate = document.createElement("th");
+                    const street = document.createElement("th");
+                    const city = document.createElement("th");
+                    const phoneEmail = document.createElement("th");
+                    const profession = document.createElement("th");
+                    table.appendChild(tr);
+                    tr.appendChild(th).appendChild(btn1);
+                    tr.appendChild(th).appendChild(btn2);
+                    tr.appendChild(fullname);
+                    tr.appendChild(birthdate);
+                    tr.appendChild(street);
+                    tr.appendChild(city);
+                    tr.appendChild(phoneEmail);
+                    tr.appendChild(profession);
+                    if (rez[i].Birthdate == null) {
+                        rez[i].Birthdate = "";
+                    }
+                    var sec = rez[i].Birthdate.slice(6, 19);
+                    console.log(sec);
+                    d = sec / 1;
+                    var dat = new Date(d);
+                    var datum = dat.toLocaleDateString();
+                    if (datum == "1/1/1970") {
+                        datum = "";
+                    }
+                    
+                   
+                    fullname.innerText = rez[i].Fullname;
+                    birthdate.innerText = datum;
+                    street.innerText = rez[i].Street;
+                    city.innerText = rez[i].City;
+                    phoneEmail.innerHTML = rez[i].Phone == null ? ""+ rez[i].Email : rez[i].Phone +"</br>"+ rez[i].Email;
+                    profession.innerText = rez[i].Profession;
+                    btn1.innerText = "EDIT";
+                    //btn1.value = rez[i].UserID;
+                    // btn2.value = rez[i].UserID;
+                    btn2.innerText = "DELETE";
+                    btn1.style = "color:blue";
+                    btn2.style = "color:red";
+                    map1.set(rez[i].UserID, btn1)
+                    map2.set(rez[i].UserID, btn2)
+                }
+               
+                for (const [key, values] of map1.entries()) {
+                    values.addEventListener('click', () => {
+                        console.log(window.location)
+                        localStorage.setItem("UserID", key)
+                        console.log(key)
+                        location.replace(location.origin + "/User/updateUserByAdmin");
+                    })
+
+                }
+
+                for (const [key, values] of map2.entries()) {
+                    values.addEventListener('click', () => {
+                        console.log(key);
+                        $.ajax({
+                            type: "GET",
+                            url: "/User/DeleteData/" + key,
+                            dataType: "json",
+                            success: function (data) {
+                                if (data == true) {
+                                    toastr.success(data.message, 'User has been deleted!');
+                                    setTimeout(function () {
+                                        window.location.reload()
+                                    }, 2000)
+                                  
+                                }
+                                
+                            },
+                            error: function (err) {
+                                if (data == false) {
+                                    console.log(err)
+                                    toastr.error(data.message, 'User has not been deleted!');
+                                }
+                            }
+
+                        });
+                      
+                       
+
+                    })
+
+                }
+
+            }
+        },
+        error: (err) => {
+            console.log("err");
+            console.log(err)
+        }
+    });
+
+</script>

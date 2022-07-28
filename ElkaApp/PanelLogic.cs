@@ -12,7 +12,7 @@ using ElkaApp.Controllers;
 //[assembly: OwinStartup(typeof(ElkaApp.Startup))];
 namespace ElkaApp
 {
-    public partial class PanelLogic: IDisposable
+    public partial class PanelLogic : IDisposable
     {
         protected Models.ApplicationDbContext DB;
         private ApplicationUserManager _userManager;
@@ -38,7 +38,7 @@ namespace ElkaApp
         //        _userManager = value;
         //    }
         //}
-        
+
 
 
         public void Dispose()
@@ -46,11 +46,11 @@ namespace ElkaApp
             if (DB != null)
                 DB.Dispose();
         }
- 
+
 
         public void AddCompany(Company company)
         {
-            
+
             //var user = new Models.User;
 
 
@@ -73,32 +73,38 @@ namespace ElkaApp
             var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
 
             obj.Fullname = user.Fullname;
-            obj.Brithdate = user.Brithdate;
+            obj.Birthdate = user.Birthdate;
             obj.Street = user.Street;
             obj.City = user.City;
             obj.Phone = user.Phone;
             obj.Email = user.Email != null ? user.Email : obj.Email;
             obj.Profession = user.Profession;
-            obj.FilePath = user.FilePath;
+            if (user.FilePath != null)
+            {
+                obj.FilePath = user.FilePath;
+            }
 
-           var id = user.ID.ToString();
+            //var id = user.ID.ToString();
 
 
             DB.SaveChanges();
-          //  var aspUser = _userManager.FindById(id);  //.Users.First(x => x.Id == id);
-          //     aspUser.Email = user.Email;
-          
-            //var us = UserManager.FindById(id);
-            
-           
-
-            //return obj;
 
         }
 
         public User GetUser(Guid id)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj.FilePath == null)
+            {
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            }
+            return obj;
+        }
+
+        public List<User> GetAllUsers()
+        {
+            var obj = DB.Users.ToList();
+
             return obj;
         }
 
@@ -157,6 +163,41 @@ namespace ElkaApp
 
             return applicant;
         }
+        public User getUserByAdmin(Guid id)
+        {
+            var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj.FilePath == null)
+            {
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+            }
+            return obj;
+        }
+
+        public void UpdateUserDataByAdmin(User user)
+        {
+            var obj = DB.Users.FirstOrDefault(x => x.UserID == user.ID);
+
+         
+            obj.Fullname = user.Fullname;
+            obj.Phone = user.Phone;
+            obj.City = user.City;
+            obj.Email = user.Email != null ? user.Email : obj.Email;
+
+            var id = user.ID.ToString();
+
+
+            DB.SaveChanges();
+
+        }
+
+        public void DeleteUser(Guid id)
+        {
+            var user = DB.Users.FirstOrDefault(x => x.UserID == id);
+            DB.Users.Remove(user);
+            DB.SaveChanges();
+
+        }
+
     }
 
 }

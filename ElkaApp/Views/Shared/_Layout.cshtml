@@ -97,6 +97,9 @@
         .logo-profile {
             width: 80px;
             margin-top: 20px;
+            height:80px;
+            object-fit:cover;
+            border-radius:50%;
         }
 
         .logo-container {
@@ -229,7 +232,15 @@
             </div>
 
             <div class="sidebar-logo-container">
-                <img class="logo-profile" src="~/Content/img/Profile.png" />
+                @if (this.User.IsInRole("Admin"))
+                {
+                    <img class="logo-profile" id="logo-profile123" src="~/Content/img/Profile.png" />
+                }
+                else
+                {
+                <img class="logo-profile" id="logo-profile123" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" />
+
+                }
             </div>
 
             <div class="sidebar-middle">
@@ -257,19 +268,36 @@
                             Job Status
                         </a>
                     </li>
-                    <li class="navigation-list-item">
-                        <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Company" }, Request.Url.Scheme)">
-                            @* dodao za prelazak na company view *@
-                            <i class="fa-solid fa-building"></i>
-                            Company Info
-                        </a>
-                    </li>
-                    <li class="navigation-list-item">
-                        <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
-                            <i class="fa-solid fa-user"></i>
-                            User
-                        </a>
-                    </li>
+                    @if (this.User.IsInRole("Admin"))
+                    {
+                        <li class="navigation-list-item">
+                            <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Company" }, Request.Url.Scheme)">
+                                @* dodao za prelazak na company view *@
+                                <i class="fa-solid fa-building"></i>
+                                Company Info
+                            </a>
+                        </li>
+                    }
+                    @if (this.User.IsInRole("User"))
+                    {
+                        <li class="navigation-list-item">
+                            <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
+                                <i class="fa-solid fa-user"></i>
+                                User
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="navigation-list-item">
+                            <a href="@Url.Action("ViewAllUsers", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
+                                <i class="fa-solid fa-user"></i>
+                                User
+                            </a>
+                        </li>
+                    }
+
+
                     <li class="navigation-list-item">
 
                         @if (Request.IsAuthenticated)
@@ -318,8 +346,6 @@
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
     <script>
-
-
         let sidebarHeader = document.querySelector('.sidebar-header');
         let sidebarToggle = document.querySelector(".sidebarToggle");
 
@@ -337,6 +363,38 @@
         })
 
         const items = document.querySelectorAll('.navigation-list-item');
+
+        function setProfilePicture() {
+            let id = localStorage.getItem('userID');
+            if (id === null) {
+                setTimeout(setProfilePicture, 100);
+                return;
+            }
+            $.ajax({
+                type: "GET",
+                url: "/User/GetData/" + id,
+                dataType: "json",
+                success: function (rez) {
+                    console.log('ress');
+                    console.log(rez);
+
+
+                    var profilePic = document.getElementById("logo-profile123");
+                    if (rez.FilePath != "") {
+
+                        profilePic.src = rez.FilePath;
+                        profilePic.style.display = "block";
+                    }
+                },
+                error: (err) => {
+                    console.log("err");
+                    console.log(err)
+                }
+            });
+        }
+        setTimeout(setProfilePicture, 100);
+       
+    const items = document.querySelectorAll('.navigation-list-item');
 
         $(document).ready(function () {
             activeClass();
