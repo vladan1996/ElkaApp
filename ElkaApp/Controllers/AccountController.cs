@@ -174,13 +174,13 @@ namespace ElkaApp.Controllers
                     await roleManager.CreateAsync(new IdentityRole("User"));
                     await UserManager.AddToRoleAsync(user.Id, "User");
 
-                    if (!roleManager.RoleExists("Admin"))
+                       if (!roleManager.RoleExists("Admin"))
                     {
                         var roleresult = roleManager.Create(new IdentityRole("Admin"));
-  
-                            user = new ApplicationUser { UserName = "Admin@admin.com", Email = "admin@admin.com" };
-                            result = await UserManager.CreateAsync(user, "Admin.123");
-                            newUser = BLL.RegisterNewUser(user.Id, model);
+
+                        user = new ApplicationUser { UserName = "Admin@admin.com", Email = "admin@admin.com" };
+                        result = await UserManager.CreateAsync(user, "Admin.123");
+                            //newUser = BLL.RegisterNewUser(user.Id, model);
                             await UserManager.AddToRoleAsync(user.Id, "Admin");
                     }
 
