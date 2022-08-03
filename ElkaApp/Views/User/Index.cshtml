@@ -60,7 +60,7 @@
     }
 
     .btnUser {
-        margin-top: 60px;
+      
         padding: 15px;
         width: 250px;
         border-radius: 25px;
@@ -76,6 +76,7 @@
     .imagePreview {
         width: 100px;
         height: 100px;
+       background: https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png;
         background-size: cover;
         background-position: center center;
         display: inline-block;
@@ -137,7 +138,7 @@
         </div>
         <div class="grid-item">
             <label for="phone">PHONE*</label>
-            <input type="text" class="phone" />
+            <input type="number" class="phone" />
         </div>
         <div class="grid-item">
             <label for="email">EMAIL*</label>
@@ -159,17 +160,17 @@
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 
 <script>
-    
+
     function showPreview(event) {
         if (event.target.files.length > 0) {
             var src = URL.createObjectURL(event.target.files[0]);
             var preview = document.getElementById("file-ip-1-preview");
             preview.src = src;
             preview.style.display = "block";
-            
+
         }
     }
-     
+
 
     var picture = null;
     let data = localStorage.getItem('userID');
@@ -213,65 +214,67 @@
                 preview.src = rez.FilePath;
                 preview.style.display = "block";
             }
-          
+
         },
         error: (err) => {
             console.log("err");
             console.log(err)
         }
     });
-
-
+   
     btn.addEventListener('click', () => {
-
-        let fullname = name.value + " " + lastName.value;
-        const dataSend = {
-            fullname: fullname,
-            birthdate: birthdate.value,
-            street: street.value,
-            city: city.value,
-            phone: phone.value,
-            email: email.value,
-            profession: profession.value,
-            Id: data,
-        }
-        
-        var formData = new FormData();
-        formData.append("fullname", fullname);
-        formData.append("birthdate", birthdate.value);
-        formData.append("street", street.value);
-        formData.append("city", city.value);
-        formData.append("phone", phone.value);
-        formData.append("email", email.value);
-        formData.append("profession", profession.value);
-        formData.append("Id", data);
-
+        if (email.value.match(/^(([^<>()[\]\\.,;:\s@@\"]+(\.[^<>()[\]\\.,;:\s@@\"]+)*)|(\".+\"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/)) {
+            let fullname = name.value + " " + lastName.value;
+            //const dataSend = {
+            //    fullname: fullname,
+            //    birthdate: birthdate.value,
+            //    street: street.value,
+            //    city: city.value,
+            //    phone: phone.value,
+            //    email: email.value,
+            //    profession: profession.value,
+            //    Id: data,
+            //}
+            var formData = new FormData();
+            formData.append("fullname", fullname);
+            formData.append("birthdate", birthdate.value);
+            formData.append("street", street.value);
+            formData.append("city", city.value);
+            formData.append("phone", phone.value);
+            formData.append("email", email.value);
+            formData.append("profession", profession.value);
+            formData.append("Id", data);
+           
             formData.append("picture", picture);
-        console.log(picture);
-        $.ajax({
-            type: "post",
-            url: "/User/UpdateData",
-            data: formData,
-            processData: false,
-            contentType: false,
-            cache: false,
-            enctype: 'multipart/form-data',
-            success: (s) => {
-                toastr.success(data.message, 'Data has been updated!');
-                setTimeout(function () {
-                    window.location.reload()
-                }, 2000)
-                
-               
-            },
-            error: (data) => {
-                console.log("errr")
-                toastr.error(data.message, 'Data has not been updated!')
-            }
-        });
-       
+            console.log(picture);
+            $.ajax({
+                type: "post",
+                url: "/User/UpdateData",
+                data: formData,
+                processData: false,
+                contentType: false,
+                cache: false,
+                enctype: 'multipart/form-data',
+                success: (s) => {
+
+                    toastr.success(data.message, 'Data has been updated!');
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 2000)
 
 
+                },
+                error: (data) => {
+                    console.log("errr")
+                    toastr.error(data.message, 'Data has not been updated!')
+                }
+            });
+
+
+        }
+        else {
+            toastr.error(data.message, 'Email is invalid!', { timeOut: 3000 })
+        }
        
 
     });

@@ -174,7 +174,7 @@ namespace ElkaApp.Controllers
                     await roleManager.CreateAsync(new IdentityRole("User"));
                     await UserManager.AddToRoleAsync(user.Id, "User");
 
-                    if (!roleManager.RoleExists("Admin"))
+                       if (!roleManager.RoleExists("Admin"))
                     {
                         var roleresult = roleManager.Create(new IdentityRole("Admin"));
                         
