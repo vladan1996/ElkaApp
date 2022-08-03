@@ -33,12 +33,13 @@
         margin-top: 20px;
         display: grid;
         grid-template-columns: auto auto;
-        /*gap: 20px;*/
+        gap: 20px;
     }
 
     .grid-item {
         display: flex;
         align-items: center;
+        justify-content:end;
     }
 
     input {
@@ -199,11 +200,32 @@
         url: "/User/GetData/" + data,
         dataType: "json",
         success: function (rez) {
-
+            console.log(rez)
             var result = rez.Fullname.trim().split(/\s+/);
             name.value = result[0];
             lastName.value = result[1];
-            birthdate.value = rez.Birthdate;
+            if (rez.Birthdate == null) {
+                birthdate.value = null;
+            }
+            else {
+                var sec = rez.Birthdate.slice(6, 19);
+                
+               var d = parseInt(sec);
+                console.log(sec)
+                var date = new Date(d);
+                var yyyy = date.getFullYear().toString();
+                var mm = (date.getMonth() + 1).toString();
+                var dd = date.getDate().toString();
+                console.log(yyyy)
+                var mmChars = mm.split('');
+                var ddChars = dd.split('');
+               
+                var datum = yyyy + '-' + (mmChars[1] ? mm : "0" + mmChars[0]) + '-' + (ddChars[1] ? dd : "0" + ddChars[0]);
+                console.log(datum)
+                birthdate.value = datum;
+               
+            }
+           
             street.value = rez.Street;
             city.value = rez.City;
             phone.value = rez.Phone;
