@@ -239,7 +239,6 @@
                 else
                 {
                 <img class="logo-profile" id="logo-profile123" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png" />
-
                 }
             </div>
 
@@ -256,13 +255,13 @@
 
             <div class="sidebar-body">
                 <ul class="navigation-list">
-                    <li class="navigation-list-item">
+                    <li class="navigation-list-item" onclick="location.href = '@(Url.Action("Index", "Job",  new { area = string.Empty, controller = "Job" }, Request.Url.Scheme))'"> 
                         <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Job" }, Request.Url.Scheme)">
                             <i class="fa-solid fa-briefcase"></i>
                             Job
                         </a>
                     </li>
-                    <li class="navigation-list-item">
+                    <li class="navigation-list-item" onclick="location.href = '@(Url.Action("Index", "Status",  new { area = string.Empty, controller = "Status" }, Request.Url.Scheme))'">
                         <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Status" }, Request.Url.Scheme)">
                             <i class="fa-solid fa-chart-line"></i>
                             Job Status
@@ -270,7 +269,7 @@
                     </li>
                     @if (this.User.IsInRole("Admin"))
                     {
-                        <li class="navigation-list-item">
+                        <li class="navigation-list-item" onclick="location.href = '@(Url.Action("Index", "Company",  new { area = string.Empty, controller = "Company" }, Request.Url.Scheme))'">
                             <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "Company" }, Request.Url.Scheme)">
                                 @* dodao za prelazak na company view *@
                                 <i class="fa-solid fa-building"></i>
@@ -280,7 +279,7 @@
                     }
                     @if (this.User.IsInRole("User"))
                     {
-                        <li class="navigation-list-item">
+                        <li class="navigation-list-item" onclick="location.href = '@(Url.Action("Index", "User",  new { area = string.Empty, controller = "User" }, Request.Url.Scheme))'">
                             <a href="@Url.Action("Index", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
                                 <i class="fa-solid fa-user"></i>
                                 User
@@ -289,10 +288,10 @@
                     }
                     else
                     {
-                        <li class="navigation-list-item">
+                        <li class="navigation-list-item" onclick="location.href = '@(Url.Action("ViewAllUsers", "User",  new { area = string.Empty, controller = "User" }, Request.Url.Scheme))'">
                             <a href="@Url.Action("ViewAllUsers", null, new { area = string.Empty, controller = "User" }, Request.Url.Scheme)">
                                 <i class="fa-solid fa-user"></i>
-                                User
+                                Users
                             </a>
                         </li>
                     }
@@ -361,9 +360,7 @@
             document.getElementById("sidebarToggle").classList.toggle('active');
             document.querySelector('.footer-text').classList.toggle('active');
         })
-
-       
-
+        
         function setProfilePicture() {
             let id = localStorage.getItem('userID');
             if (id === null) {
@@ -416,9 +413,11 @@
                 }
             });
         }
-
+        
     </script>
 
+
+    
 
     <!-- Optional JavaScript; choose one of the two! -->
     <!-- Option 1: Bootstrap Bundle with Popper -->

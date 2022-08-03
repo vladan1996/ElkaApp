@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using ElkaApp.Controllers;
+using ElkaApp.Models.DTO;
 
 //[assembly: OwinStartup(typeof(ElkaApp.Startup))];
 namespace ElkaApp
@@ -202,6 +203,26 @@ namespace ElkaApp
 
         }
 
+        public List<Status>GetStatuses()
+        {
+            var data = DB.Statuses.ToList();
+            return data;
+        }
+
+        public bool UpdateJobStatus(UpdateStatusDTO data) {
+
+            if (data.JobStausId != null && data.OldStatusId != null && data.NewStatusId != null) {
+                var jobStatus = DB.JobStatuses.FirstOrDefault(x => x.ID == data.JobStausId && x.StatusID == data.OldStatusId);
+
+                jobStatus.StatusID = data.NewStatusId;
+
+                DB.SaveChanges();
+
+                return true;
+            }
+            
+            return false;
+        }
     }
 
 }

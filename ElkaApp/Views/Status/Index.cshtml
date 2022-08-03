@@ -31,20 +31,25 @@
             <table class="table table-bordered align-middle">
                 <thead>
                     <tr>
-                        <th scope="col">OPTION</th>
-                        <th scope="col">APPLICANT</th>
-                        <th scope="col">JOB NAME</th>
-                        <th scope="col">APPLICANT EMAIL AND PHONE</th>
-                        <th scope="col">ADDRESS AND CITY</th>
-                        <th scope="col">JOB STATUS</th>
-                    </tr>
+                        @if (this.User.IsInRole("Admin"))
+                        {
+                            <th scope="col">OPTION</th>
+                        }
+                            <th scope="col">APPLICANT</th>
+                            <th scope="col">JOB NAME</th>
+                            <th scope="col">APPLICANT EMAIL AND PHONE</th>
+                            <th scope="col">ADDRESS AND CITY</th>
+                            <th scope="col">JOB STATUS</th>
+                        </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr>
-                            
+                    <tr>
+                        @if (this.User.IsInRole("Admin"))
+                        {
                             <th scope="row">@Html.ActionLink("Edit", "Edit", new { id = item.ID }, new { @class = "btn btn-info" })</th>
+                        }
                             <td>@item.User.Fullname <br /> @item.Job.StartDate</td>
                             <td>@item.Job.Name</td>
                             <td>@item.User.Email <br /> @item.User.Phone</td>

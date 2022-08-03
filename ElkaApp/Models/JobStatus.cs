@@ -16,7 +16,7 @@ namespace ElkaApp.Models
         public Guid UserID { get; set; }
         public Guid JobID { get; set; }
         public Guid StatusID { get; set; }
-
+         
         [ForeignKey("JobID")]
         public virtual Job Job { get; set; }
         [ForeignKey("UserID")]
