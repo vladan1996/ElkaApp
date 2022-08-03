@@ -180,7 +180,7 @@ namespace ElkaApp.Controllers
   
                             user = new ApplicationUser { UserName = "Admin@admin.com", Email = "admin@admin.com" };
                             result = await UserManager.CreateAsync(user, "Admin.123");
-                            newUser = BLL.RegisterNewUser(user.Id, model);
+                            //newUser = BLL.RegisterNewUser(user.Id, model);
                             await UserManager.AddToRoleAsync(user.Id, "Admin");
                     }
 

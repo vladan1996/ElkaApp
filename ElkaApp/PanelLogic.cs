@@ -77,7 +77,7 @@ namespace ElkaApp
             obj.Street = user.Street;
             obj.City = user.City;
             obj.Phone = user.Phone;
-            obj.Email = user.Email != null ? user.Email : obj.Email;
+            obj.Email = user.Email;/* != null ? user.Email : obj.Email;*/
             obj.Profession = user.Profession;
             if (user.FilePath != null)
             {
@@ -94,6 +94,12 @@ namespace ElkaApp
         public User GetUser(Guid id)
         {
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
+            if(obj==null)
+            {
+                return null;
+            }
+
+
             if(obj.FilePath == null)
             {
                 obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
@@ -168,7 +174,7 @@ namespace ElkaApp
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
             if(obj.FilePath == null)
             {
-                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thum-b/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
             }
             return obj;
         }

@@ -362,7 +362,7 @@
             document.querySelector('.footer-text').classList.toggle('active');
         })
 
-        const items = document.querySelectorAll('.navigation-list-item');
+       
 
         function setProfilePicture() {
             let id = localStorage.getItem('userID');
@@ -377,13 +377,12 @@
                 success: function (rez) {
                     console.log('ress');
                     console.log(rez);
-
-
                     var profilePic = document.getElementById("logo-profile123");
                     if (rez.FilePath != "") {
 
                         profilePic.src = rez.FilePath;
                         profilePic.style.display = "block";
+                        
                     }
                 },
                 error: (err) => {
