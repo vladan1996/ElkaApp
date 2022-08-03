@@ -183,13 +183,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
-
-
-<script>
-    window.addEventListener('load', () => {
-        let userID = document.querySelector('.tempData').innerHTML;
-        localStorage.setItem("userID", userID);
-    })
-</script>

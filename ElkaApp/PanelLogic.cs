@@ -94,6 +94,7 @@ namespace ElkaApp
 
         public User GetUser(Guid id)
         {
+            
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
             if(obj == null)
             {
@@ -173,7 +174,7 @@ namespace ElkaApp
             var obj = DB.Users.FirstOrDefault(x => x.UserID == id);
             if(obj.FilePath == null)
             {
-                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thum-b/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
+                obj.FilePath = "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/1024px-No_image_available.svg.png";
             }
             return obj;
         }

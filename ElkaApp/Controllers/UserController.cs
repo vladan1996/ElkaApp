@@ -71,26 +71,26 @@ namespace ElkaApp.Controllers
             // return data;
         }
 
-
+        [Authorize]
         public JsonResult GetData(Guid id)
         {
             return Json(BLL.GetUser(id), JsonRequestBehavior.AllowGet); //Json(BLL.GetUser(id));
         }
 
-
+        
         public ActionResult ViewAllUsers ()
         {
             
             return View();
         }
 
-
-         public JsonResult GetUsers() 
+        
+        public JsonResult GetUsers() 
          {
          return Json(BLL.GetAllUsers(), JsonRequestBehavior.AllowGet);
          }
 
-
+        
         public ActionResult updateUserByAdmin()
         {
             return View();
@@ -111,12 +111,12 @@ namespace ElkaApp.Controllers
            return Json(user, JsonRequestBehavior.AllowGet);
 
         }
-
+        [Authorize]
         public JsonResult GetDataByAdmin(Guid id)
         {
             return Json(BLL.getUserByAdmin(id), JsonRequestBehavior.AllowGet);
         }
-
+        [Authorize]
         public async Task<JsonResult> DeleteData(Guid id)
         {
             var isSucces = false;
