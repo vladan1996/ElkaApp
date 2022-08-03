@@ -28,9 +28,9 @@
         box-shadow: 0px 5px 5px 1px rgba(0,0,0,0.3);
         margin-top: 20px;
     }
-    .container_back{
-        margin-left:300px;
 
+    .container_back {
+        margin-left: 280px;
     }
 </style>
 
@@ -45,92 +45,170 @@
 
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => Model.ID)
+        @Html.HiddenFor(model => Model.ID, new { @class = "hiddenJobStatusID" })
+
+        @Html.HiddenFor(model => Model.StatusID, new { @class = "hiddenOldStatusID" })
 
         <div class="container_back">
             <div class="col-md-5">
                 @*<input type="submit" value="Save" class="btn btn-success" />*@
-                <a class="text-decoration-none"  href="@Url.Action("Index", null, new { area = string.Empty, controller = "Status" }, Request.Url.Scheme)"><i class="fa-regular fa-circle-left"></i></a>
+                <a class="text-decoration-none" href="@Url.Action("Index", null, new { area = string.Empty, controller = "Status" }, Request.Url.Scheme)"><i class="fa-regular fa-circle-left"></i></a>
             </div>
         </div>
 
-        <div class="container_div">
+
+        <div class="col-md-12 text-center p-3">
             <label class="form-group">APPLICANT</label>
-            <div class="col-md-5">
+            <div class="col-md-12 text-center">
                 @Model.User.Fullname
             </div>
         </div>
 
-        <div class="container_div">
+        <div class="col-md-12 text-center p-3">
             <label class="form-group">APPLICATION DATE AND TIME</label>
-            <div class="col-md-6">
+            <div class="col-md-12 text-center">
                 @Model.Job.StartDate
             </div>
         </div>
 
-        <div class="container_div">
+        <div class="col-md-12 text-center p-3">
             <label class="form-group">JOB NAME,LOCATION AND START DATE</label>
-            <div class="col-md-6">
+            <div class="col-md-12 text-center">
                 @Model.Job.Name <br /> @Model.Job.Location <br /> @Model.Job.StartDate
 
             </div>
         </div>
 
-        <div class="container_div">
+        <div class="col-md-12 text-center p-3">
             <label class="form-group">APPLICATION EMAIL AND PHONE</label>
-            <div class="col-md-8">
+            <div class="col-md-12 text-center">
                 @Model.User.Email <br /> @Model.User.Phone
             </div>
         </div>
 
-        <div class="container_div">
+        <div class="col-md-12 text-center p-3">
             <label class="form-group">ADDRESS AND CITY</label>
-            <div class="col-md-10">
-                @Model.User.Street <br /> @Model.User.City
+            <div class="col-md-12 text-center">
+                @Model.User.Street <br /> @Model.User.City 
             </div>
         </div>
 
         @*Dropdown button*@
-
-        <div class="container_div">
-            <div class="btn-group">
-                @if (Model.Status.StatusName == "Rejected")
-                {
-                    <button type="button" class="btn btn-danger">@Model.Status.StatusName</button>
-                    <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="visually-hidden">Toggle Dropdown</span>
-                    </button>
-
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Accepted</a></li>
-                     
-                    </ul>
-                }
-                else
-                {
-                    <button type="button" class="btn btn-success">@Model.Status.StatusName</button>
-                    <button type="button" class="btn btn-success dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
-                        <span class="visually-hidden">Toggle Dropdown</span>
-                    </button>
-
-                    <ul class="dropdown-menu">
-                        
-                        <li><a class="dropdown-item" href="#">Rejected</a></li>
-                    </ul>
-                }
-
-
-                @*<ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">Accepted</a></li>
-                    <li><a class="dropdown-item" href="#">Rejected</a></li>
-                </ul>*@
-
+        @if (Model.Status.StatusName == "Rejected")
+        {
+            <div class="col-md-12 text-center p-3">
+                <select class="dropStatus"  style="border:1px solid red; padding:10px; border-radius: 20px; width:150px;">
+                    <option selected disabled>@Model.Status.StatusName</option>
+                </select>
             </div>
-        </div>
 
-
-
-    </div>
+        }
+        else
+        {
+            <div class="col-md-12 text-center p-3">
+                <select class="dropStatus" style="border:1px solid red; padding:10px; border-radius: 20px; width:150px; border:1px solid #00FF00 ">
+                    <option selected disabled>@Model.Status.StatusName</option>
+                </select>
+            </div>
         }
 
     </div>
+    }
+
+</div>
+
+
+@section Scripts
+{
+
+    <script>
+
+        const selectDropStatus = document.querySelector('.dropStatus');
+        const jobStatusID = document.querySelector('.hiddenJobStatusID').value;
+        const oldStatusID = document.querySelector('.hiddenOldStatusID').value;
+
+        console.log("job status id");
+        console.log(jobStatusID);
+
+        selectDropStatus.addEventListener('change', (e) => saveStatus(e));
+
+        $(document).ready(function () {
+            $.ajax({
+                type: "get",
+                url: '/status/getstatuses',
+                contenttype: "application/json; charset=utf-8",
+                datatype: "json",
+                async: false,
+                success: function (data) {
+                    console.log("sattus data");
+                    console.log(data)
+                    let status = data;
+
+                    let cont;
+
+                    status.map(item => {
+                        if (item.StatusName == 'Rejected') {
+                            let temp = `<option class="text-danger" value=${item.ID}> ${item.StatusName} </option>`;
+                            temp.ID = 'abcc';
+                            selectDropStatus.innerHTML += temp;
+                        } else {
+                            let temp = `<option class="text-success" value=${item.ID}> ${item.StatusName} </option>`;
+                            temp.ID = 'abcc';
+                            selectDropStatus.innerHTML += temp;
+                        }
+                        
+                    }
+
+                    ); 
+                },
+                error: function (err) {
+                    console.log("sattus data err");
+                    console.log(err);
+
+                    toastr.error(data.message, 'information alert', { timeout: 3000 })
+                }
+
+            });
+
+        });
+
+
+        function saveStatus(item) {
+
+            console.log('clikced');
+            console.log(item.target.value);
+
+            let dataSend = {
+                jobStausId: jobStatusID,
+                oldStatusID: oldStatusID,
+                newStatusID: item.target.value
+            }
+
+            $(document).ready(function () {
+                $.ajax({
+                    type: "POST",
+                    url: '/status/UpdateJobStatus',
+                    contenttype: "application/json; charset=utf-8",
+                    data: dataSend,
+                    datatype: "json",
+                    success: function (data) {
+                        console.log("data");
+                        console.log(data);
+                        location.reload();
+                        window.location.replace('http://localhost:51493/Status');
+                    },
+                    error: function (err) {
+                        console.log("status data err");
+                        console.log(err);
+                        location.reload();
+
+                     //   toastr.error(data.message, 'information alert', { timeout: 3000 })
+                    }
+
+                });
+
+            });
+
+        }
+    </script>
+}

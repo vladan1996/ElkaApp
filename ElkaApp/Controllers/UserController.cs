@@ -33,7 +33,7 @@ namespace ElkaApp.Controllers
         [Authorize]
         public ActionResult Index()
         {
-            // var user = CurrentUser.ID;
+            //var user = CurrentUser.ID;
             //var model = BLL.FindUserById(user);
             return View();
         }
@@ -83,10 +83,14 @@ namespace ElkaApp.Controllers
             
             return View();
         }
+
+
          public JsonResult GetUsers() 
          {
          return Json(BLL.GetAllUsers(), JsonRequestBehavior.AllowGet);
-      }
+         }
+
+
         public ActionResult updateUserByAdmin()
         {
             return View();

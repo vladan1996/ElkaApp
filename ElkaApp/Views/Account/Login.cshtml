@@ -1,30 +1,33 @@
 ﻿@using ElkaApp.Models
 @model LoginViewModel
-@{  
+@{
     ViewBag.Title = "Log in";
     Layout = null;
 }
+
+
 <style>
 
-    .container_div{
-        height:100%;
-        width:100%;
-        display:flex;
+    .container_div {
+        height: 100%;
+        width: 100%;
+        display: flex;
     }
 
-    .left_div{
-        background-color:#E0E0E0;
-        width:70%;
-        padding:30px;
-        display:flex;
-        align-items:center;
-        flex-direction:column;
+    .left_div {
+        background-color: #E0E0E0;
+        width: 70%;
+        padding: 30px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
     }
+
     .right_div {
-        text-align:center;
+        text-align: center;
         padding: 30px;
         width: 30%;
-        padding:30px;
+        padding: 30px;
         display: flex;
         align-items: center;
         flex-direction: column;
@@ -39,33 +42,36 @@
         height: auto;
     }
 
-    .left_div_title{
-        margin-top:40px;
-
-    }
-    .left_div_title>h1{
-        font-weight:700;
-        font-family:sans-serif;
-        margin-bottom:40px;
+    .left_div_title {
+        margin-top: 40px;
     }
 
-    .left_div_title > p{
-        font-family:sans-serif;
-    }
+        .left_div_title > h1 {
+            font-weight: 700;
+            font-family: 'Roboto',sans-serif;
+            margin-bottom: 40px;
+        }
+
+        .left_div_title > p {
+            margin-top: 60px;
+            font-family: 'Roboto',sans-serif;
+        }
 
     .right_div_title {
-        text-align:center;
+        font-family:'Roboto',sans-serif;
+        text-align: center;
     }
 
 
     .redirect_to_register {
         margin-top: 50px;
+        
     }
 
     .input_circle {
         width: 250px;
         padding: 15px;
-        margin-top:20px;
+        margin-top: 20px;
         border-radius: 20px;
         border: 2px solid #b7bac7;
         font-size: medium
@@ -76,10 +82,10 @@
             border-color: #69adf0;
         }
 
-    
+
 
     .input_circle_button {
-        margin-top:10%;
+        margin-top: 10%;
         background-color: #176AE7;
         color: white;
         width: 250px;
@@ -88,37 +94,39 @@
         border: 1px solid;
     }
 
-    .redirect_to_register{
-        text-align:center;
-        margin-top:20px;
+    .redirect_to_register {
+        text-align: center;
+        margin-top: 20px;
     }
 
-    .text-danger ul{
-        color:red;
-        list-style-type:none;
-        text-align:left
+    .text-danger ul {
+        color: red;
+        list-style-type: none;
+        text-align: left
     }
 
     .text-danger {
-        
         color: red;
         margin-bottom: 20px;
         text-align: left
     }
-
+    .redirect_to_register_span{
+       font-weight:800;
+      
+    }
 </style>
 <div class="container_div">
 
     <div class="left_div">
-        
+
         <div class="left_div_image">
-            <img src="~/Content/img/Logo.png"/>
+            <img src="~/Content/img/Logo.png" />
         </div>
         <div class="left_div_title">
             <h1>WELCOME TO ELKA</h1>
             <p>Please login to our system. <br />If you donot have an account, please register.</p>
 
-        </div>   
+        </div>
 
 
     </div>
@@ -128,7 +136,7 @@
             <h3 class="right_div_title">BE ONE OF US!</h3>
         </div>
         <section id="loginForm">
-        
+
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
@@ -161,7 +169,7 @@
                     </p>
                 </div>
             }
-        
+
         </section>
 
     </div>
