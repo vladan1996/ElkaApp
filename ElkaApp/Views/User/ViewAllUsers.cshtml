@@ -90,7 +90,7 @@
                     }
                     var sec = rez[i].Birthdate.slice(6, 18);
                     console.log(sec);
-                    d = sec / 1;
+                    var d = parseInt(sec);
                     var dat = new Date(d);
                     var datum = dat.toLocaleDateString();
                     console.log(datum)
